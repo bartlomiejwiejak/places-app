@@ -7,17 +7,19 @@ const UsersList = ({ items }) => {
     <h2>No users found.</h2>
   </div>
   if (items.length > 0) {
-    <ul>
-      {items.map(item => (
-        <UserItem
-          key={item.id}
-          id={item.id}
-          image={item.image}
-          name={user.name}
-          placeCount={user.places}
-        />
-      ))}
-    </ul>
+    content = (
+      <ul className='user-list'>
+        {items.map(item => (
+          <UserItem
+            key={item.id}
+            id={item.id}
+            image={item.image}
+            name={item.name}
+            placeCount={item.places}
+          />
+        ))}
+      </ul>
+    )
   }
   return content;
 }
