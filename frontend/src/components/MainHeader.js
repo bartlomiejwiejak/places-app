@@ -10,14 +10,12 @@ const MainHeader = () => {
 
   return (
     <header className='main-header'>
-      {isSidedrawerOpen && <Backdrop onClick={() => setIsSidedrawerOpen(false)} />}
-      {
-        isSidedrawerOpen && <Sidedrawer>
-          <nav className="main-navigation__drawer-nav">
-            <NavLinks />
-          </nav>
-        </Sidedrawer>
-      }
+      <Backdrop isSidedrawerOpen={isSidedrawerOpen} onClick={() => setIsSidedrawerOpen(false)} />
+      <Sidedrawer isSidedrawerOpen={isSidedrawerOpen}>
+        <nav className="main-navigation__drawer-nav">
+          <NavLinks />
+        </nav>
+      </Sidedrawer>
       <button onClick={() => setIsSidedrawerOpen(true)} className='main-navigation__menu-btn'>
         <span></span>
         <span></span>
