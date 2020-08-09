@@ -1,7 +1,8 @@
 import React from 'react'
 import Card from './Card';
+import Button from './Button';
 
-function PlaceItem({ image, title, adress, description }) {
+function PlaceItem({ image, title, adress, description, id }) {
   return (
     <li className="place-item">
       <Card className='place-item__content'>
@@ -14,9 +15,9 @@ function PlaceItem({ image, title, adress, description }) {
           <p>{description}</p>
         </div>
         <div className="place-item__actions">
-          <button>VIEW ON MAP</button>
-          <button>EDIT</button>
-          <button>DELETE</button>
+          <Button inverse>VIEW ON MAP</Button>
+          <Button to={`/places/${id}`}>EDIT</Button>
+          <Button danger>DELETE</Button>
         </div>
       </Card>
     </li>
