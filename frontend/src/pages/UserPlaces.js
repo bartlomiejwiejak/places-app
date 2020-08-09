@@ -9,7 +9,7 @@ const PLACES = [
     title: 'Warsaw',
     description: 'Best city in eu',
     imageUrl: 'https://s27363.pcdn.co/wp-content/uploads/2020/05/Things-to-do-in-Warsaw.jpg.optimal.jpg',
-    adress: 'Sienna 39, 00-121 Warszawa',
+    address: 'Sienna 39, 00-121 Warszawa',
     location: {
       lat: 52.2318392,
       lng: 20.9998857
@@ -21,7 +21,7 @@ const PLACES = [
     title: 'Warsaw',
     description: 'Best city in eu',
     imageUrl: 'https://s27363.pcdn.co/wp-content/uploads/2020/05/Things-to-do-in-Warsaw.jpg.optimal.jpg',
-    adress: 'Sienna 39, 00-121 Warszawa',
+    address: 'Sienna 39, 00-121 Warszawa',
     location: {
       lat: 52.2318392,
       lng: 20.9998857

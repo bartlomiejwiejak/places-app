@@ -18,7 +18,7 @@ const MainHeader = () => {
 
   return (
     <header className='main-header'>
-      <Backdrop isSidedrawerOpen={isSidedrawerOpen} onClick={closeSidedrawerHandler} />
+      <Backdrop show={isSidedrawerOpen} onClick={closeSidedrawerHandler} />
       <Sidedrawer isSidedrawerOpen={isSidedrawerOpen} onClick={closeSidedrawerHandler}>
         <nav className="main-navigation__drawer-nav">
           <NavLinks />

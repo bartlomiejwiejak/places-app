@@ -12,14 +12,14 @@ function Sidedrawer({ children, isSidedrawerOpen, onClick }) {
     }
     else {
       if (isMounted) {
-        gsap.to('.side-drawer', 1, { x: '-100%', ease: 'power2.out', onComplete: () => setIsMounted(false) })
+        gsap.to('.side-drawer', .5, { x: '-100%', ease: 'power2.out', onComplete: () => setIsMounted(false) })
       }
     }
   }, [isSidedrawerOpen, isMounted])
 
   useEffect(() => {
     if (isMounted) {
-      gsap.to('.side-drawer', 1, { x: 0, ease: 'power2.out' })
+      gsap.to('.side-drawer', .5, { x: 0, ease: 'power2.out' })
     }
   }, [isMounted])
 

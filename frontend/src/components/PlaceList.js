@@ -23,7 +23,7 @@ function PlaceList({ items }) {
             image={item.imageUrl}
             title={item.title}
             description={item.description}
-            address={item.adress}
+            address={item.address}
             creatorId={item.creator}
             coordinates={item.location}
           />
