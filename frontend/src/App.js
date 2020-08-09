@@ -1,11 +1,18 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Users from './pages/Users';
+import MainHeader from './components/MainHeader';
 
 function App() {
   return (
     <div className="App">
-      <Route path='/' component={Users} />
+      <MainHeader />
+      <main>
+        <Switch>
+          <Route path='/' component={Users} />
+          <Redirect to='/' />
+        </Switch>
+      </main>
     </div>
   );
 }
