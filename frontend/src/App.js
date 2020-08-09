@@ -9,7 +9,7 @@ function App() {
       <MainHeader />
       <main>
         <Switch>
-          <Route path='/' component={Users} />
+          <Route path='/' exact component={Users} />
           <Redirect to='/' />
         </Switch>
       </main>
