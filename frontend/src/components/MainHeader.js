@@ -8,15 +8,23 @@ const MainHeader = () => {
 
   const [isSidedrawerOpen, setIsSidedrawerOpen] = useState(false);
 
+  const closeSidedrawerHandler = () => {
+    setIsSidedrawerOpen(false)
+  }
+
+  const openSidedrawerHandler = () => {
+    setIsSidedrawerOpen(true)
+  }
+
   return (
     <header className='main-header'>
-      <Backdrop isSidedrawerOpen={isSidedrawerOpen} onClick={() => setIsSidedrawerOpen(false)} />
-      <Sidedrawer isSidedrawerOpen={isSidedrawerOpen}>
+      <Backdrop isSidedrawerOpen={isSidedrawerOpen} onClick={closeSidedrawerHandler} />
+      <Sidedrawer isSidedrawerOpen={isSidedrawerOpen} onClick={closeSidedrawerHandler}>
         <nav className="main-navigation__drawer-nav">
           <NavLinks />
         </nav>
       </Sidedrawer>
-      <button onClick={() => setIsSidedrawerOpen(true)} className='main-navigation__menu-btn'>
+      <button onClick={openSidedrawerHandler} className='main-navigation__menu-btn'>
         <span></span>
         <span></span>
         <span></span>
