@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Users from './pages/Users';
@@ -7,10 +7,22 @@ import UserPlaces from './pages/UserPlaces';
 import NewPlace from './pages/NewPlace';
 import UpdatePlace from './pages/UpdatePlace';
 import Auth from './pages/Auth';
+import { AuthContext } from './context/auth-context';
 
 function App() {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const login = () => {
+    setIsLoggedIn(true)
+  }
+
+  const logout = () => {
+    setIsLoggedIn(false)
+  }
+
   return (
-    <div className="App">
+    <AuthContext.Provider value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}>
       <MainHeader />
       <main>
         <Switch>
@@ -22,7 +34,7 @@ function App() {
           <Redirect to='/' />
         </Switch>
       </main>
-    </div>
+    </AuthContext.Provider>
   );
 }
 
