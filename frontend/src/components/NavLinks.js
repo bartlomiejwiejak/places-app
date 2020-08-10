@@ -4,7 +4,7 @@ import { AuthContext } from '../context/auth-context';
 
 function NavLinks() {
 
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, logout } = useContext(AuthContext);
 
   return (
     <nav className='nav-links'>
@@ -21,6 +21,10 @@ function NavLinks() {
       {!isLoggedIn &&
         <li>
           <NavLink exact to='/auth'>AUTHENTICATE</NavLink>
+        </li>}
+      {isLoggedIn &&
+        <li>
+          <button onClick={logout}>LOGOUT</button>
         </li>}
     </nav>
   )
