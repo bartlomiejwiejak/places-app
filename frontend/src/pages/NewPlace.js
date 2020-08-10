@@ -4,7 +4,7 @@ import Input from '../components/Input';
 
 function NewPlace() {
   return <form className='place-form'>
-    <Input element='input' type='text' label='title' />
+    <Input element='input' type='text' label='Title' validators={[]} errorText='Please, enter a valid title.' />
   </form>
 }
 
