@@ -18,8 +18,8 @@ const PLACES = [
   },
   {
     id: 'p2',
-    title: 'Warsaw',
-    description: 'Best city in eu',
+    title: 'Krakow',
+    description: 'Worst',
     imageUrl: 'https://s27363.pcdn.co/wp-content/uploads/2020/05/Things-to-do-in-Warsaw.jpg.optimal.jpg',
     address: 'Sienna 39, 00-121 Warszawa',
     location: {

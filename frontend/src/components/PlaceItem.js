@@ -8,6 +8,7 @@ import Map from './Map';
 function PlaceItem({ image, title, address, description, id, coordinates }) {
 
   const [showMap, setShowMap] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const openMapHandler = () => {
     setShowMap(true)
@@ -15,6 +16,19 @@ function PlaceItem({ image, title, address, description, id, coordinates }) {
 
   const closeMapHandler = () => {
     setShowMap(false)
+  }
+
+  const showDeleteWarningHandler = () => {
+    setShowConfirmModal(true)
+  }
+
+  const hideDeleteWarningHandler = () => {
+    setShowConfirmModal(false)
+  }
+
+  const confirmDeleteHandler = () => {
+    console.log('deleting')
+    setShowConfirmModal(false)
   }
 
   return (
@@ -29,6 +43,14 @@ function PlaceItem({ image, title, address, description, id, coordinates }) {
           <Map center={coordinates} zoom={16} />
         </div>
       </Modal>
+      <Modal onCancel={hideDeleteWarningHandler} show={showConfirmModal} header='Are you sure?' footerClass='place-item__modal-actions' footer={
+        <>
+          <Button onClick={hideDeleteWarningHandler} inverse>CANCEL</Button>
+          <Button onClick={confirmDeleteHandler} danger>DELETE</Button>
+        </>
+      }>
+        <p>Do you want to preceed and delete this place? Please note it can't be undone.</p>
+      </Modal>
       <li className="place-item">
         <Card className='place-item__content'>
           <div className="place-item__image">
@@ -42,7 +64,7 @@ function PlaceItem({ image, title, address, description, id, coordinates }) {
           <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>VIEW ON MAP</Button>
             <Button to={`/places/${id}`}>EDIT</Button>
-            <Button danger>DELETE</Button>
+            <Button onClick={showDeleteWarningHandler} danger>DELETE</Button>
           </div>
         </Card>
       </li>

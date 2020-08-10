@@ -5,6 +5,7 @@ import Input from '../components/Input';
 import Button from '../components/Button';
 import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../functions/validators';
 import useForm from '../hooks/useForm';
+import Card from '../components/Card';
 
 const PLACES = [
   {
@@ -21,8 +22,8 @@ const PLACES = [
   },
   {
     id: 'p2',
-    title: 'Warsaw',
-    description: 'Best city in eu',
+    title: 'Krakow',
+    description: 'Worst',
     imageUrl: 'https://s27363.pcdn.co/wp-content/uploads/2020/05/Things-to-do-in-Warsaw.jpg.optimal.jpg',
     address: 'Sienna 39, 00-121 Warszawa',
     location: {
@@ -51,23 +52,29 @@ function UpdatePlace() {
 
   const identifiedPlace = PLACES.find(place => place.id === placeId)
   useEffect(() => {
-    setFormData({
-      title: {
-        value: identifiedPlace.title,
-        isValid: true
-      },
-      description: {
-        value: identifiedPlace.description,
-        isValid: true
-      },
-    }, true)
+    if (identifiedPlace) {
+      setFormData({
+        title: {
+          value: identifiedPlace.title,
+          isValid: true
+        },
+        description: {
+          value: identifiedPlace.description,
+          isValid: true
+        },
+      }, true)
+    }
     setIsLoading(false)
   }, [setFormData, identifiedPlace])
 
   if (!identifiedPlace) {
-    return <div>
-      <h2>Could not find place!</h2>
-    </div>
+    return (
+      <div className="center">
+        <Card>
+          <h2>Could not find place!</h2>
+        </Card>
+      </div>
+    )
   }
 
   const placeUpdateSubmitHandler = event => {
