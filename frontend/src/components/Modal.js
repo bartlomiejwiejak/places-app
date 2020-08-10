@@ -33,7 +33,7 @@ function Modal(props) {
         gsap.to('.modal', .5, { scale: 0, autoAlpha: 0, ease: 'power2.out', onComplete: () => setIsMounted(false) })
       }
     }
-  }, [props.show])
+  }, [props.show, isMounted])
 
   useEffect(() => {
     if (isMounted) {

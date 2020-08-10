@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
+
 import Card from './Card';
 import Button from './Button';
 import Modal from './Modal';
+import Map from './Map';
 
-function PlaceItem({ image, title, address, description, id }) {
+function PlaceItem({ image, title, address, description, id, coordinates }) {
 
   const [showMap, setShowMap] = useState(false);
 
@@ -24,7 +26,7 @@ function PlaceItem({ image, title, address, description, id }) {
         contentClass='place-item__modal-content' footerClass='place-item__modal-actions'
         footer={<Button onClick={closeMapHandler}>CLOSE</Button>}>
         <div className="map-container">
-          <h2>THE MAP!</h2>
+          <Map center={coordinates} zoom={16} />
         </div>
       </Modal>
       <li className="place-item">
