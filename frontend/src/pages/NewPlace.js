@@ -49,8 +49,14 @@ function NewPlace() {
     dispatch({ type: 'INPUT_CHANGE', isValid: isValid, value: value, inputId: inputId })
   }, [])
 
-  return <form className='place-form'>
+  const placeSubmitHandler = event => {
+    event.preventDefault();
+    console.log(formState.inputs)
+  }
+
+  return <form className='place-form' onSubmit={placeSubmitHandler}>
     <Input onInput={inputChange} id='title' element='input' type='text' label='Title' validators={[VALIDATOR_REQUIRE()]} errorText='Please, enter a valid title.' />
+    <Input onInput={inputChange} id='adress' element='input' type='text' label='Adress' validators={[VALIDATOR_REQUIRE()]} errorText='Please, enter a valid address.' />
     <Input onInput={inputChange} id='description' element='textarea' type='text' label='Description' validators={[VALIDATOR_MINLENGTH(5)]} errorText='Please, enter a valid description (at least 5 characters).' />
     <Button type='submit' disabled={!formState.isValid}>ADD PLACE</Button>
   </form>
