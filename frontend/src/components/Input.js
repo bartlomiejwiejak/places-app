@@ -18,8 +18,8 @@ const inputReducer = (state, action) => {
   }
 }
 
-function Input({ label, id, element, type, placeholder, rows, errorText, validators, onInput }) {
-  const [inputState, dispatch] = useReducer(inputReducer, { value: '', isValid: false, isTouched: false });
+function Input({ label, id, element, type, placeholder, rows, errorText, validators, onInput, initialValue, valid }) {
+  const [inputState, dispatch] = useReducer(inputReducer, { value: initialValue || '', isValid: valid || false, isTouched: false });
 
   const { isValid, value } = inputState;
 
