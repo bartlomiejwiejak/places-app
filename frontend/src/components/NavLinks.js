@@ -11,7 +11,7 @@ function NavLinks() {
         <NavLink exact to='/u1/places'>MY PLACES</NavLink>
       </li>
       <li>
-        <NavLink exact to='/palces/new'>ADD PLACE</NavLink>
+        <NavLink exact to='/places/new'>ADD PLACE</NavLink>
       </li>
       <li>
         <NavLink exact to='/auth'>AUTHENTICATE</NavLink>
