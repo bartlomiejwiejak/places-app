@@ -21,7 +21,6 @@ function NewPlace() {
       isValid: false
     }
   }, false)
-  console.log(formState)
   const placeSubmitHandler = event => {
     event.preventDefault();
   }

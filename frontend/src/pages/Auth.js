@@ -1,13 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 import Input from '../components/Input';
 import useForm from '../hooks/useForm';
 import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../functions/validators';
 import Button from '../components/Button';
 import Card from '../components/Card';
+import { AuthContext } from '../context/auth-context';
 
 function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
+  const { login } = useContext(AuthContext);
 
   const [formState, inputChange, setFormData] = useForm({
     email: {
@@ -22,7 +24,7 @@ function Auth() {
 
   const authSubmitHandler = event => {
     event.preventDefault();
-    console.log(formState)
+    login();
   }
 
   const switchIsSignUp = () => {
