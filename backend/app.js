@@ -13,7 +13,7 @@ app.use('/api/places', placesRoutes)
 app.use('/api/users', usersRoutes)
 
 app.use((req, res, next) => {          //for unsupported routes
-  const error = newHttpError('Could not find this route', 404);
+  const error = new HttpError('Could not find this route', 404);
   throw error;
 })
 

@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+const { validationResult } = require('express-validator')
 
 const HttpError = require('../models/http-error');
 
@@ -22,6 +23,13 @@ const getUsers = (req, res, next) => {
 }
 
 const signup = (req, res, next) => {
+
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+    throw new HttpError('Invalid inputs. Please check your data.')
+  }
+
   const { name, password, email } = req.body;
 
   USERS.forEach(user => {
