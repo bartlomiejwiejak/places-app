@@ -5,31 +5,6 @@ const HttpError = require('../models/http-error');
 const getCoordsForAdress = require('../utility/location');
 const Place = require('../models/place');
 
-const PLACES = [
-  {
-    id: 'p1',
-    title: 'Empire State',
-    description: 'Most famous sky scraper',
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878531,
-    },
-    adress: '20 W 34th St, New York, NY 10001, Stany Zjednoczone',
-    creator: 'u1'
-  },
-  {
-    id: 'p2',
-    title: 'Empire State',
-    description: 'Most famous sky scraper',
-    location: {
-      lat: 40.7484405,
-      lng: -73.9878531,
-    },
-    adress: '20 W 34th St, New York, NY 10001, Stany Zjednoczone',
-    creator: 'u1'
-  }
-]
-
 const getPlaceById = async (req, res, next) => {
   const placeId = req.params.placeId
   let place;
@@ -100,21 +75,33 @@ const createPlace = async (req, res, next) => {
   res.status(201).json({ place: createdPlace })
 }
 
-const updatePlace = (req, res, next) => {
+const updatePlace = async (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     throw new HttpError('Invalid inputs passed. Please check your data.', 422)
   }
+
   const placeId = req.params.placeId;
-  const updatedPlace = { ...PLACES.find(place => placeId === place.id) };
   const { title, description } = req.body;
-  updatedPlace.title = title;
-  updatedPlace.description = description;
 
-  const placeIndex = PLACES.findIndex(place => place.id === placeId)
-  PLACES[placeIndex] = updatedPlace;
+  let place;
+  try {
+    place = await Place.findById(placeId);
+  } catch (err) {
+    const error = new HttpError('Updating place failed. Please try again later.', 404)
+    return next(error);
+  }
+  place.description = description;
+  place.title = title;
 
-  res.status(200).json({ place: updatedPlace })
+  try {
+    await place.save();
+  } catch (err) {
+    const error = new HttpError('Something went wrong, could not update place.')
+    return next(error);
+  }
+
+  res.status(200).json({ place: place.toObject({ getters: true }) })
 }
 
 const deletePlace = (req, res, next) => {
