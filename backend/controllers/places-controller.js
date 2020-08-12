@@ -97,20 +97,29 @@ const updatePlace = async (req, res, next) => {
   try {
     await place.save();
   } catch (err) {
-    const error = new HttpError('Something went wrong, could not update place.')
+    const error = new HttpError('Something went wrong, could not update place.', 402)
     return next(error);
   }
 
   res.status(200).json({ place: place.toObject({ getters: true }) })
 }
 
-const deletePlace = (req, res, next) => {
+const deletePlace = async (req, res, next) => {
   const placeId = req.params.placeId;
-  const index = PLACES.indexOf(place => place.id === placeId)
-  if (index === -1) {
-    throw new HttpError('Invalid place id.', 404)
+  let place;
+
+  try {
+    place = await Place.findById(placeId);
+  } catch (err) {
+    const error = new HttpError('Deleting place failed, please try again later.', 500)
+    return next(error);
   }
-  PLACES.splice(index - 1, 1);
+
+  try {
+    await place.remove()
+  } catch (err) {
+    const error = new Http('Deleting place failed, please try again later.', 500)
+  }
 
   res.status(200).json({ deletedPlace: placeId })
 }
