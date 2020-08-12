@@ -3,6 +3,7 @@ const { validationResult } = require('express-validator')
 
 const HttpError = require('../models/http-error');
 const getCoordsForAdress = require('../utility/location');
+const Place = require('../models/place');
 
 const PLACES = [
   {
@@ -64,16 +65,20 @@ const createPlace = async (req, res, next) => {
     return next(error)
   }
 
-  const createdPlace = {
-    id: uuidv4(),
+  const createdPlace = new Place({
     title,
     description,
-    location: coordinates,
     address,
+    location: coordinates,
+    image: 'https://gfx.wiadomosci.radiozet.pl/var/radiozetwiadomosci/storage/images/polska/warszawa/warszawa-miastem-przyjaznym-osobom-niepelnosprawnym/5412603-1-pol-PL/Warszawa-z-prestizowym-wyroznieniem.-Jest-wzorem-dla-europejskich-miast_article.jpg',
     creator
-  };
-
-  PLACES.push(createdPlace)
+  })
+  try {
+    await createdPlace.save();
+  } catch (err) {
+    const error = new HttpError('Creating place failed. Please try again.', 500)
+    return next(error);
+  }
 
   res.status(201).json({ place: createdPlace })
 }
