@@ -19,8 +19,15 @@ const USERS = [
   }
 ]
 
-const getUsers = (req, res, next) => {
-  res.json({ users: USERS })
+const getUsers = async (req, res, next) => {
+  let users;
+  try {
+    users = await User.find({}, '-password');
+  } catch (err) {
+    const error = new HttpError('Fetching users failed, please try again later.', 400)
+    return next(error)
+  }
+  res.json({ users: users.map(user => user.toObject({ getters: true })) })
 }
 
 const signup = async (req, res, next) => {
@@ -50,7 +57,7 @@ const signup = async (req, res, next) => {
     email,
     image: 'https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg',
     password,
-    places
+    places: '123'
   })
   try {
     await createdUser.save()
