@@ -38,7 +38,7 @@ const signup = async (req, res, next) => {
     return next(new HttpError('Invalid inputs. Please check your data.'))
   }
 
-  const { name, password, email, places } = req.body;
+  const { name, password, email } = req.body;
   let existingUser;
 
   try {
@@ -56,8 +56,7 @@ const signup = async (req, res, next) => {
     name,
     email,
     image: 'https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg',
-    password,
-    places: '123'
+    password
   })
   try {
     await createdUser.save()
