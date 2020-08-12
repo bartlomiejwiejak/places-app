@@ -62,18 +62,22 @@ const signup = async (req, res, next) => {
   res.status(201).json({ user: createdUser.toObject({ getters: true }) })
 }
 
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
   const { password, email } = req.body;
-  let userId = null;
-  USERS.forEach(user => {
-    if (user.email === email && user.password === password) {
-      userId = user.id;
-    }
-  })
-  if (userId === null) {
-    return next(new HttpError('No account found', 401));
+
+  let user;
+
+  try {
+    user = await User.findOne({ email: email })
+  } catch (err) {
+    const error = new HttpError('Loggin in failed, try again later.')
+    return next(error);
   }
-  res.json({ userId })
+  if (!user || user.password !== password) {
+    return next(new HttpError('Invalid inputs, could not log you in.', 401));
+  }
+
+  res.json({ message: 'Logged in' })
 }
 
 exports.getUsers = getUsers;
