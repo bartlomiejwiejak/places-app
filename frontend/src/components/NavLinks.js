@@ -4,7 +4,7 @@ import { AuthContext } from '../context/auth-context';
 
 function NavLinks() {
 
-  const { isLoggedIn, logout } = useContext(AuthContext);
+  const { isLoggedIn, logout, userId } = useContext(AuthContext);
 
   return (
     <nav className='nav-links'>
@@ -13,7 +13,7 @@ function NavLinks() {
       </li>
       {isLoggedIn &&
         <li>
-          <NavLink exact to='/u1/places'>MY PLACES</NavLink>
+          <NavLink exact to={`/${userId}/places`}>MY PLACES</NavLink>
         </li>}
       {isLoggedIn && <li>
         <NavLink exact to='/places/new'>ADD PLACE</NavLink>

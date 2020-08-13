@@ -9,11 +9,11 @@ import useHttp from '../hooks/useHttp';
 import ErrorModal from './ErrorModal';
 import LoadingSpinner from './LoadingSpinner';
 
-function PlaceItem({ image, title, address, description, id, coordinates }) {
+function PlaceItem({ image, title, address, description, id, coordinates, creatorId }) {
 
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const { isLoggedIn } = useContext(AuthContext);
+  const { isLoggedIn, userId } = useContext(AuthContext);
   const [isMounted, setIsMounted] = useState(true)
   const { sendRequest, isLoading, error, clearError } = useHttp();
 
@@ -80,8 +80,8 @@ function PlaceItem({ image, title, address, description, id, coordinates }) {
           </div>
           <div className="place-item__actions">
             <Button inverse onClick={openMapHandler}>VIEW ON MAP</Button>
-            {isLoggedIn && <Button to={`/places/${id}`}>EDIT</Button>}
-            {isLoggedIn && <Button onClick={showDeleteWarningHandler} danger>DELETE</Button>}
+            {isLoggedIn && userId === creatorId && <Button to={`/places/${id}`}>EDIT</Button>}
+            {isLoggedIn && userId === creatorId && <Button onClick={showDeleteWarningHandler} danger>DELETE</Button>}
           </div>
         </Card>
       </li>
