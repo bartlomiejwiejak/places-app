@@ -22,9 +22,28 @@ function Auth() {
     }
   }, false)
 
-  const authSubmitHandler = event => {
+  const authSubmitHandler = async event => {
     event.preventDefault();
-    login();
+    let response;
+    if (isSignUp) {
+      try {
+        response = await fetch('http://localhost:5000/api/users/signup', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value
+          })
+        })
+        const responseData = await response.json()
+        console.log(responseData)
+      } catch (err) {
+      }
+      login();
+    }
   }
 
   const switchIsSignUp = () => {
@@ -52,7 +71,7 @@ function Auth() {
         {isSignUp && <Input id='name' element='input' type='text' label='Your name' validators={[VALIDATOR_REQUIRE()]} onInput={inputChange} />}
         <Input id='email' element='input' type='email' label='E-mail' validators={[VALIDATOR_EMAIL()]} errorText='Please, enter a valid email.' onInput={inputChange} />
         <Input id='password' element='input' type='password' label='Password' validators={[VALIDATOR_MINLENGTH(6)]} errorText='Please, enter a valid password (at least 5 characters).' onInput={inputChange} />
-        <Button submit disabled={!formState.isValid}>LOGIN</Button>
+        <Button submit disabled={!formState.isValid}>{isSignUp ? 'SIGNUP' : 'LOGIN'}</Button>
       </form>
       <Button onClick={switchIsSignUp} inverse>SWITCH TO{isSignUp ? ' SIGNIN' : ' SIGNUP'}</Button>
     </Card>
