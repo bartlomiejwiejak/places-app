@@ -1,40 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import UsersList from '../components/UsersList';
 import ErrorModal from '../components/ErrorModal';
+import useHttp from '../hooks/useHttp';
 
 const Users = () => {
 
-  const [users, setUsers] = useState([])
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { sendRequest, isLoading, error, clearError } = useHttp();
+  const [users, setUsers] = useState(null);
 
   useEffect(() => {
     const fetchUsers = async () => {
-      setIsLoading(true)
       try {
-        const response = await fetch('http://localhost:5000/api/users');
-        if (response.ok) {
-          const responseData = await response.json();
-          setUsers(responseData.users);
-          setIsLoading(false);
-        } else {
-          throw new Error(response.error.message);
-        }
-      } catch (err) {
-        setError(err);
-        setIsLoading(false)
-      }
+        const responseData = await sendRequest('http://localhost:5000/api/users');
+        setUsers(responseData.users);
+      } catch (err) { }
     }
     fetchUsers();
-  }, [])
-
-  const errorHandler = () => {
-    setError(null)
-  }
+  }, [sendRequest])
 
   return <>
-    <ErrorModal onClear={errorHandler} error={error} />
-    {isLoading && users ? <UsersList items={users} /> : null}
+    <ErrorModal onClear={clearError} error={error} />
+    {!isLoading && users ? <UsersList items={users} /> : null}
   </>
 }
 
