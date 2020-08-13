@@ -21,7 +21,7 @@ function PlaceList({ items }) {
           <PlaceItem
             key={item.id}
             id={item.id}
-            image={item.imageUrl}
+            image={item.image}
             title={item.title}
             description={item.description}
             address={item.address}

@@ -39,7 +39,11 @@ function useHttp() {
 
   useEffect(() => {
     return () => {
-      activeHttpRequests.current.forEach(request => request.abortCtrl.abort())
+      activeHttpRequests.current.forEach(request => {
+        if (request.abortCtrl !== undefined) {
+          request.abortCtrl.abort()
+        }
+      })
     }
   }, [])
 
