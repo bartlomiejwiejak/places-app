@@ -31,13 +31,12 @@ function Auth() {
     event.preventDefault();
     if (isSignUp) {
       try {
-        const response = await sendRequest('http://localhost:5000/api/users/signup', 'POST', JSON.stringify({
-          name: formState.inputs.name.value,
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value
-        }), {
-          'Content-Type': 'application/json'
-        });
+        const formData = new FormData();
+        formData.append('email', formState.inputs.email.value)
+        formData.append('name', formState.inputs.name.value)
+        formData.append('password', formState.inputs.password.value)
+        formData.append('image', formState.inputs.image.value)
+        const response = await sendRequest('http://localhost:5000/api/users/signup', 'POST', formData);
         setUserId(response.user.id);
         login();
       } catch (err) { }
