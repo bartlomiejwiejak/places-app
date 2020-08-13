@@ -13,7 +13,7 @@ const UserItem = ({ image, name, placeCount, id }) => {
           </div>
           <div className="user-item__info">
             <h2>{name}</h2>
-            <h3>{placeCount} {placeCount === '1' ? 'Place' : 'Places'}</h3>
+            <h3>{placeCount} {placeCount === 1 ? 'Place' : 'Places'}</h3>
           </div>
         </Link>
       </Card>

@@ -12,6 +12,7 @@ import { AuthContext } from './context/auth-context';
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userId, setUserId] = useState(null);
 
   const login = () => {
     setIsLoggedIn(true)
@@ -45,7 +46,7 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn: isLoggedIn, login: login, logout: logout }}>
+    <AuthContext.Provider value={{ isLoggedIn: isLoggedIn, login: login, logout: logout, userId: userId, setUserId: setUserId }}>
       <MainHeader />
       <main>
         {routes}

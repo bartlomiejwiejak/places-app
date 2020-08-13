@@ -12,7 +12,7 @@ import useHttp from '../hooks/useHttp';
 
 function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
-  const { login } = useContext(AuthContext);
+  const { login, setUserId } = useContext(AuthContext);
   const { sendRequest, isLoading, error, clearError } = useHttp();
 
   const [formState, inputChange, setFormData] = useForm({
@@ -30,23 +30,25 @@ function Auth() {
     event.preventDefault();
     if (isSignUp) {
       try {
-        await sendRequest('http://localhost:5000/api/users/signup', 'POST', JSON.stringify({
+        const response = await sendRequest('http://localhost:5000/api/users/signup', 'POST', JSON.stringify({
           name: formState.inputs.name.value,
           email: formState.inputs.email.value,
           password: formState.inputs.password.value
         }), {
           'Content-Type': 'application/json'
         });
+        setUserId(response.user.id);
         login();
       } catch (err) { }
     } else {
       try {
-        await sendRequest('http://localhost:5000/api/users/login', 'POST', JSON.stringify({
+        const response = await sendRequest('http://localhost:5000/api/users/login', 'POST', JSON.stringify({
           email: formState.inputs.email.value,
           password: formState.inputs.password.value
         }), {
           'Content-Type': 'application/json'
         });
+        setUserId(response.user.id);
         login();
       } catch (err) { }
     }
