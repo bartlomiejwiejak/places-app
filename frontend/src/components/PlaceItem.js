@@ -5,12 +5,18 @@ import Button from './Button';
 import Modal from './Modal';
 import Map from './Map';
 import { AuthContext } from '../context/auth-context';
+import useHttp from '../hooks/useHttp';
+import ErrorModal from './ErrorModal';
+import LoadingSpinner from './LoadingSpinner';
 
 function PlaceItem({ image, title, address, description, id, coordinates }) {
 
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const { isLoggedIn } = useContext(AuthContext);
+  const [isMounted, setIsMounted] = useState(true)
+  const { sendRequest, isLoading, error, clearError } = useHttp();
+
 
   const openMapHandler = () => {
     setShowMap(true)
@@ -28,13 +34,22 @@ function PlaceItem({ image, title, address, description, id, coordinates }) {
     setShowConfirmModal(false)
   }
 
-  const confirmDeleteHandler = () => {
-    console.log('deleting')
+  const confirmDeleteHandler = async () => {
     setShowConfirmModal(false)
+    try {
+      await sendRequest(`http://localhost:5000/api/places/${id}`, 'DELETE');
+      setIsMounted(false)
+    } catch (err) { }
+  }
+
+  if (!isMounted) {
+    return null;
   }
 
   return (
     <>
+      {isLoading && <LoadingSpinner />}
+      <ErrorModal onClear={clearError} error={error} />
       <Modal
         show={showMap}
         onCancel={closeMapHandler}
