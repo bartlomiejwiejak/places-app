@@ -1,4 +1,3 @@
-const { v4: uuidv4 } = require('uuid');
 const { validationResult } = require('express-validator')
 const mongoose = require('mongoose')
 
@@ -131,7 +130,7 @@ const deletePlace = async (req, res, next) => {
   let place;
 
   try {
-    place = await Place.findById(placeId).populate('creator'); //only when connection is set up
+    place = await Place.findById(placeId).populate('creator'); //only when connection is set up, gets access to different connection
   } catch (err) {
     const error = new HttpError('Deleting place failed, please try again later.', 500)
     return next(error);
