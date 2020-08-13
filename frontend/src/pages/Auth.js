@@ -29,9 +29,9 @@ function Auth() {
   const authSubmitHandler = async event => {
     event.preventDefault();
     let response;
+    setIsLoading(true);
     if (isSignUp) {
       try {
-        setIsLoading(true);
         response = await fetch('http://localhost:5000/api/users/signup', {
           method: 'POST',
           headers: {
@@ -39,6 +39,28 @@ function Auth() {
           },
           body: JSON.stringify({
             name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value
+          })
+        })
+        const responseData = await response.json()
+        if (!response.ok) {
+          throw new Error(responseData.message)
+        }
+        setIsLoading(false);
+        login();
+      } catch (err) {
+        setError(err.message)
+        setIsLoading(false);
+      }
+    } else {
+      try {
+        response = await fetch('http://localhost:5000/api/users/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
             email: formState.inputs.email.value,
             password: formState.inputs.password.value
           })
