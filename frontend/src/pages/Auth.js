@@ -62,12 +62,17 @@ function Auth() {
         name: {
           value: '',
           isValid: false
+        },
+        image: {
+          value: '',
+          isValid: false
         }
       }, false)
     } else {
       setFormData({
         ...formState.inputs,
-        name: undefined
+        name: undefined,
+        image: undefined
       }, formState.inputs.email.isValid && formState.inputs.password.isValid)
     }
     setIsSignUp((prev) => !prev)
@@ -81,7 +86,7 @@ function Auth() {
         <h2>{isSignUp ? 'Register' : 'Login'} required</h2>
         <form onSubmit={authSubmitHandler}>
           {isSignUp && <Input id='name' element='input' type='text' label='Your name' validators={[VALIDATOR_REQUIRE()]} onInput={inputChange} />}
-          {isSignUp && <ImageUpload center id='' />}
+          {isSignUp && <ImageUpload onInput={inputChange} center id='image' />}
           <Input id='email' element='input' type='email' label='E-mail' validators={[VALIDATOR_EMAIL()]} errorText='Please, enter a valid email.' onInput={inputChange} />
           <Input id='password' element='input' type='password' label='Password' validators={[VALIDATOR_MINLENGTH(6)]} errorText='Please, enter a valid password (at least 6 characters).' onInput={inputChange} />
           <Button submit disabled={!formState.isValid}>{isSignUp ? 'SIGNUP' : 'LOGIN'}</Button>
