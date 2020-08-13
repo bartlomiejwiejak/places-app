@@ -9,6 +9,7 @@ import { AuthContext } from '../context/auth-context';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorModal from '../components/ErrorModal';
 import useHttp from '../hooks/useHttp';
+import ImageUpload from '../components/ImageUpload';
 
 function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -80,6 +81,7 @@ function Auth() {
         <h2>{isSignUp ? 'Register' : 'Login'} required</h2>
         <form onSubmit={authSubmitHandler}>
           {isSignUp && <Input id='name' element='input' type='text' label='Your name' validators={[VALIDATOR_REQUIRE()]} onInput={inputChange} />}
+          {isSignUp && <ImageUpload center id='' />}
           <Input id='email' element='input' type='email' label='E-mail' validators={[VALIDATOR_EMAIL()]} errorText='Please, enter a valid email.' onInput={inputChange} />
           <Input id='password' element='input' type='password' label='Password' validators={[VALIDATOR_MINLENGTH(6)]} errorText='Please, enter a valid password (at least 6 characters).' onInput={inputChange} />
           <Button submit disabled={!formState.isValid}>{isSignUp ? 'SIGNUP' : 'LOGIN'}</Button>
