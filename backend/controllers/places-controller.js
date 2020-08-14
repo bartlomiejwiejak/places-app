@@ -113,6 +113,11 @@ const updatePlace = async (req, res, next) => {
     const error = new HttpError('Updating place failed. Please try again later.', 404)
     return next(error);
   }
+  if (place.creator.toString() !== req.userData.userId) {
+    const error = new HttpError('You are not allowed to edit this place.', 401)
+    return next(error);
+  }
+
   place.description = description;
   place.title = title;
 
@@ -139,6 +144,12 @@ const deletePlace = async (req, res, next) => {
   if (!place) {
     return next(new Error('Could not find place for this id.', 404))
   }
+
+  if (place.creator.toString() !== req.userData.userId) {
+    const error = new HttpError('You are not allowed to delete this place.', 401)
+    return next(error);
+  }
+
   const imagePath = place.image;
   try {
     const sess = await mongoose.startSession();
