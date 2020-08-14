@@ -145,7 +145,7 @@ const deletePlace = async (req, res, next) => {
     return next(new Error('Could not find place for this id.', 404))
   }
 
-  if (place.creator.toString() !== req.userData.userId) {
+  if (place.creator.id !== req.userData.userId) {
     const error = new HttpError('You are not allowed to delete this place.', 401)
     return next(error);
   }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Users from './pages/Users';
@@ -9,20 +9,38 @@ import UpdatePlace from './pages/UpdatePlace';
 import Auth from './pages/Auth';
 import { AuthContext } from './context/auth-context';
 
+let logoutTimeout;
+
 function App() {
 
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
 
-  const login = (userId, token) => {
-    setUserId(userId)
-    setToken(token)
-  }
-
-  const logout = () => {
+  const logout = useCallback(() => {
     setUserId(null)
     setToken(null)
-  }
+    localStorage.removeItem('userData')
+    if (logoutTimeout) {
+      clearTimeout(logoutTimeout)
+    }
+  }, [])
+
+  const login = useCallback((userId, token, expirationDate) => {
+    setUserId(userId)
+    setToken(token)
+    const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60)
+    localStorage.setItem('userData', JSON.stringify({ userId, token, expiration: tokenExpirationDate.toISOString() }))
+    logoutTimeout = setTimeout(() => {
+      logout();
+    }, tokenExpirationDate.getTime() - new Date().getTime())
+  }, [logout])
+
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem('userData'))
+    if (storedData && storedData.token && new Date(storedData.expiration) > new Date()) {
+      login(storedData.userId, storedData.token, new Date(storedData.expiration))
+    }
+  }, [login])
 
   let routes;
 
