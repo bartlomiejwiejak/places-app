@@ -28,6 +28,8 @@ function ImageUpload({ center, id, onInput, errorText }) {
       fileIsValid = true;
     } else {
       setIsValid(false)
+      setFile(null);
+      setPreviewUrl(null);
       fileIsValid = false;
     }
     onInput(id, pickedFile, fileIsValid)

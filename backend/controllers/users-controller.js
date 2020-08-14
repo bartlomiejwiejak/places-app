@@ -19,6 +19,7 @@ const signup = async (req, res, next) => {
   const errors = validationResult(req)
 
   if (!errors.isEmpty()) {
+
     return next(new HttpError('Invalid inputs. Please check your data.'))
   }
 
@@ -39,7 +40,7 @@ const signup = async (req, res, next) => {
   const createdUser = new User({
     name,
     email,
-    image: 'https://png.pngtree.com/element_our/png/20181206/users-vector-icon-png_260862.jpg',
+    image: req.file.path,
     password
   })
   try {

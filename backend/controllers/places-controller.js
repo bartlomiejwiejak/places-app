@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator')
 const mongoose = require('mongoose')
+const fs = require('fs');
 
 const HttpError = require('../models/http-error');
 const getCoordsForAdress = require('../utility/location');
@@ -63,7 +64,7 @@ const createPlace = async (req, res, next) => {
     description,
     address,
     location: coordinates,
-    image: 'https://gfx.wiadomosci.radiozet.pl/var/radiozetwiadomosci/storage/images/polska/warszawa/warszawa-miastem-przyjaznym-osobom-niepelnosprawnym/5412603-1-pol-PL/Warszawa-z-prestizowym-wyroznieniem.-Jest-wzorem-dla-europejskich-miast_article.jpg',
+    image: req.file.path,
     creator
   })
 
@@ -128,7 +129,6 @@ const updatePlace = async (req, res, next) => {
 const deletePlace = async (req, res, next) => {
   const placeId = req.params.placeId;
   let place;
-
   try {
     place = await Place.findById(placeId).populate('creator'); //only when connection is set up, gets access to different connection
   } catch (err) {
@@ -139,7 +139,7 @@ const deletePlace = async (req, res, next) => {
   if (!place) {
     return next(new Error('Could not find place for this id.', 404))
   }
-
+  const imagePath = place.image;
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
@@ -151,6 +151,9 @@ const deletePlace = async (req, res, next) => {
     const error = new Http('Deleting place failed, please try again later.', 500)
     return next(error)
   }
+  fs.unlink(imagePath, (err => {
+    console.log(err);
+  }));
 
   res.status(200).json({ deletedPlace: placeId })
 }
