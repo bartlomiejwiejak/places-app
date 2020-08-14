@@ -16,7 +16,7 @@ function UpdatePlace() {
   const { sendRequest, isLoading, error, clearError } = useHttp();
   const [loadedPlace, setLoadedPlace] = useState(null)
   const history = useHistory()
-  const { userId } = useContext(AuthContext);
+  const { userId, token } = useContext(AuthContext);
 
   const [formState, inputChange, setFormData] = useForm({
     title: {
@@ -68,7 +68,8 @@ function UpdatePlace() {
           title: formState.inputs.title.value,
           description: formState.inputs.description.value,
         }), {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
         })
         history.push('/' + userId + '/places');
       } catch (err) { }

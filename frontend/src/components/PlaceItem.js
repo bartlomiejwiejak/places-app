@@ -13,7 +13,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
 
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const { isLoggedIn, userId } = useContext(AuthContext);
+  const { isLoggedIn, userId, token } = useContext(AuthContext);
   const [isMounted, setIsMounted] = useState(true)
   const { sendRequest, isLoading, error, clearError } = useHttp();
 
@@ -37,7 +37,9 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
   const confirmDeleteHandler = async () => {
     setShowConfirmModal(false)
     try {
-      await sendRequest(`http://localhost:5000/api/places/${id}`, 'DELETE');
+      await sendRequest(`http://localhost:5000/api/places/${id}`, 'DELETE', {}, {
+        Authorization: 'Bearer ' + token
+      });
       setIsMounted(false)
     } catch (err) { }
   }
