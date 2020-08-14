@@ -13,7 +13,7 @@ import ImageUpload from '../components/ImageUpload';
 
 function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);
-  const { login, setUserId } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const { sendRequest, isLoading, error, clearError } = useHttp();
 
   const [formState, inputChange, setFormData] = useForm({
@@ -37,8 +37,7 @@ function Auth() {
         formData.append('password', formState.inputs.password.value)
         formData.append('image', formState.inputs.image.value)
         const response = await sendRequest('http://localhost:5000/api/users/signup', 'POST', formData);
-        setUserId(response.user.id);
-        login();
+        login(response.user, response.token);
       } catch (err) { }
     } else {
       try {
@@ -48,8 +47,7 @@ function Auth() {
         }), {
           'Content-Type': 'application/json'
         });
-        setUserId(response.user.id);
-        login();
+        login(response.user, response.token);
       } catch (err) { }
     }
   }

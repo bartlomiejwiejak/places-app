@@ -11,20 +11,22 @@ import { AuthContext } from './context/auth-context';
 
 function App() {
 
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [token, setToken] = useState(null);
 
-  const login = () => {
-    setIsLoggedIn(true)
+  const login = (userId, token) => {
+    setUserId(userId)
+    setToken(token)
   }
 
   const logout = () => {
-    setIsLoggedIn(false)
+    setUserId(null)
+    setToken(null)
   }
 
   let routes;
 
-  if (!isLoggedIn) {
+  if (!token) {
     routes = (
       <Switch>
         <Route path='/' exact component={Users} />
@@ -46,7 +48,7 @@ function App() {
   }
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn: isLoggedIn, login: login, logout: logout, userId: userId, setUserId: setUserId }}>
+    <AuthContext.Provider value={{ login: login, logout: logout, userId: userId, isLoggedIn: !!token, token: token }}>
       <MainHeader />
       <main>
         {routes}

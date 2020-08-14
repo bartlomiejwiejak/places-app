@@ -14,7 +14,7 @@ import ImageUpload from '../components/ImageUpload';
 function NewPlace() {
 
   const { sendRequest, isLoading, error, clearError } = useHttp();
-  const { userId } = useContext(AuthContext)
+  const { userId, token } = useContext(AuthContext)
   const history = useHistory();
 
   const [formState, inputChange] = useForm({
@@ -44,7 +44,9 @@ function NewPlace() {
     formData.append('image', formState.inputs.image.value)
     formData.append('creator', userId)
     try {
-      await sendRequest('http://localhost:5000/api/places', 'POST', formData)
+      await sendRequest('http://localhost:5000/api/places', 'POST', formData, {
+        Authorization: 'Bearer ' + token
+      })
 
       history.push('/');
     } catch (err) {
