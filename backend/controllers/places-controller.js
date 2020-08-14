@@ -38,9 +38,7 @@ const getPlacesByUserId = async (req, res, next) => {
     const error = new HttpError('Fetchning places failed, please try again later.')
     return next(error);
   }
-  if (places.length === 0) {
-    return next(new HttpError('Could not found places for the provided id.', 404))
-  }
+
   res.json({ places: places.map(place => place.toObject({ getters: true })) })
 }
 
@@ -49,6 +47,7 @@ const createPlace = async (req, res, next) => {
   if (!errors.isEmpty()) {
     return next(new HttpError('Invalid inputs passed. Please check your data', 422))
   }
+
   const { title, description, address } = req.body;
 
   let coordinates;
@@ -58,6 +57,7 @@ const createPlace = async (req, res, next) => {
   } catch (error) {
     return next(error)
   }
+  console.log('Controller')
 
   const createdPlace = new Place({
     title,

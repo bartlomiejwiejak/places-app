@@ -42,7 +42,7 @@ app.use((error, req, res, next) => {
   res.json({ message: error.message || 'An unknown error  occurred!' })
 })
 //database connection
-const connectUrl = 'mongodb+srv://bartek:ETIpEVnxlZmd8yfC@cluster0.uwdgo.gcp.mongodb.net/places?retryWrites=true&w=majority';
+const connectUrl = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.uwdgo.gcp.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 const connectConfig = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
