@@ -8,6 +8,7 @@ import { AuthContext } from '../../../../context/auth-context';
 import useHttp from '../../../../hooks/useHttp';
 import ErrorModal from '../../../shared/ErrorModal';
 import LoadingSpinner from '../../../shared/LoadingSpinner';
+import Comments from '../../../shared/Comments';
 
 function PlaceItem({ image, title, address, description, id, coordinates, creatorId }) {
 
@@ -86,6 +87,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
             <Button className='btn--small btn--blue'>COMMENTS</Button>
             {isLoggedIn && userId === creatorId && <Button className='btn--small btn--red' onClick={showDeleteWarningHandler}>DELETE</Button>}
           </div>
+          <Comments />
         </Card>
       </li>
     </>
