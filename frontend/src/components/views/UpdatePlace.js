@@ -81,6 +81,7 @@ function UpdatePlace() {
     <>
       <ErrorModal onClear={clearError} error={error} />
       {!isLoading && loadedPlace && <form className='place-form' onSubmit={placeUpdateSubmitHandler}>
+        <h1>Update Your Place</h1>
         <Input id='title' element='input' type='text' label='Title' validators={[VALIDATOR_REQUIRE()]} errorText='Please, enter a valid title.' initialValue={loadedPlace.title} valid={true} onInput={inputChange} />
         <Input id='description' element='textarea' label='Description' validators={[VALIDATOR_MINLENGTH(5)]} errorText='Please, enter a valid description (at least 5 characters).' initialValue={loadedPlace.description} valid={true} onInput={inputChange} />
         <Button type='submit' className='btn--green btn--small' disabled={!formState.isValid}>UPDATE PLACE</Button>

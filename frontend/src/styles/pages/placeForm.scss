@@ -8,4 +8,12 @@
   border-radius: 6px;
   background: var(--light);
   margin-top: 15rem;
+  h1 {
+    text-align: center;
+    margin: 2rem 0;
+  }
+  .btn {
+    display: block;
+    margin: 0 auto;
+  }
 }

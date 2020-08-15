@@ -6,10 +6,19 @@
 }
 .mb-s {
   margin-bottom: 3rem;
+  @include respond(xxsmall) {
+    margin-bottom: 2rem;
+  }
 }
 .mb-m {
   margin-bottom: 5rem;
+  @include respond(xxsmall) {
+    margin-bottom: 3rem;
+  }
 }
 .mb-l {
   margin-bottom: 8rem;
+  @include respond(xxsmall) {
+    margin-bottom: 5rem;
+  }
 }

@@ -23,6 +23,15 @@ html {
   letter-spacing: 2rem;
   white-space: nowrap;
   animation: moveInLeft 1s ease-out;
+  @include respond(large) {
+    font-size: 6rem;
+  }
+  @include respond(small) {
+    font-size: 4rem;
+  }
+  @include respond(xxsmall) {
+    letter-spacing: 1px;
+  }
 }
 
 .heading-secondary {
@@ -31,4 +40,15 @@ html {
   font-weight: 400;
   white-space: nowrap;
   animation: moveInRight 1s ease-out;
+  @include respond(large) {
+    font-size: 1.8rem;
+  }
+  @include respond(small) {
+    font-size: 1.6rem;
+    white-space: normal;
+  }
+  @include respond(xxsmall) {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
 }

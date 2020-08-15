@@ -48,7 +48,7 @@ export default function () {
         <Route path='/:userId/places' exact component={UserPlaces} />
         <Route path='/places/new' exact component={NewPlace} />
         <Route path='/places/:placeId' component={UpdatePlace} />
-        <Redirect to='/' />
+        <Redirect to='/places/new' />
       </Switch>
     )
   }

@@ -58,6 +58,7 @@ function NewPlace() {
       {isLoading ? <LoadingSpinner asOverlay /> : null}
       <ErrorModal show={error} onCancel={clearError} />
       <form className='place-form' onSubmit={placeSubmitHandler}>
+        <h1>Add New Place</h1>
         <Input onInput={inputChange} id='title' element='input' type='text' label='Title' validators={[VALIDATOR_REQUIRE()]} errorText='Please, enter a valid title.' />
         <ImageUpload errorText='Please, provide an image.' onInput={inputChange} center id='image' />
         <Input onInput={inputChange} id='address' element='input' type='text' label='Adress' validators={[VALIDATOR_REQUIRE()]} errorText='Please, enter a valid address.' />
