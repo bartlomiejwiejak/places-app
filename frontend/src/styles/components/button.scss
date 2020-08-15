@@ -1,48 +1,100 @@
-.button {
-  font: inherit;
-  padding: 0.5rem 1.5rem;
-  border: 1px solid #ff0055;
-  border-radius: 4px;
-  background: #ff0055;
-  color: white;
-  cursor: pointer;
-  margin-right: 1rem;
-  text-decoration: none;
-  display: inline-block;
-  transition: .2s ease-out;
-  &:focus {
-    outline: none;
-  }
-  &:hover, &:active {
-    background: #ff4382;
-    border-color: #ff4382;
-  }
-  &--inverse {
-    background: transparent;
-    color: #ff0055;
-    &:hover, &:active {
-      color: white;
-      background: #ff0055;
-    }
-  }
-  &--danger {
-    background: #830000;
-    border-color: #830000;
-    &:hover, &:active {
-      background: #f34343;
-      border-color: #f34343;
-    }
-  }
-  &:disabled, &:hover:disabled, &:active:disabled {
-    background: #ccc;
-    color: #979797;
-    border-color: #ccc;
-    cursor: not-allowed;
+.btn {
+  &,
+  &:link,
+  &:visited {
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1.5rem 4rem;
+      display: inline-block;
+      border-radius: 10rem;
+      transition: all .2s;
+      position: relative;
+      font-size: 1.6rem;
+      border: none;
+      cursor: pointer;
+      user-select: none;
+      font-family: 'Monument', serif;
   }
   &--small {
-    font-size: 0.8rem;
+    &,
+    &:link,
+    &:visited {
+        padding: .8rem 2rem;
+        font-size: 1.4rem;
+    }
   }
-  &--big {
-    font-size: 1.5rem;
+  &:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 1rem 2rem rgba(var(--black),.2);
+      &::after {
+          transform: scaleX(1.4) scaleY(1.6);
+          opacity: 0;
+      }
+  }
+  
+  &:active,
+  &:focus, &:not(:disabled) {
+      outline: none;
+      transform: translateY(-1px);
+      box-shadow: 0 .5rem 1rem rgba(var(--black),.2);
+  }
+  
+  &--white {
+      background-color: var(--white);
+      color: var(--grey);
+
+      &::after {
+          background-color: var(--white);
+      }
+  }
+
+  &--green {
+      background-color: var(--green);
+      color: var(--white);
+
+      &::after {
+          background-color: var(--green);
+      }
+  }
+
+  &--blue {
+    background-color: var(--blue);
+    color: var(--white);
+
+    &::after {
+        background-color: var(--blue);
+    }
+  }
+
+  &--red {
+    background-color: var(--red);
+    color: var(--white);
+
+    &::after {
+        background-color: var(--red);
+    }
+}
+   &:disabled {
+    cursor: not-allowed;
+    background-color: var(--light);
+    color: var(--grey);
+   }
+  
+  &::after {
+      content: "";
+      display: inline-block;
+      height: 100%;
+      width: 100%;
+      border-radius: 10rem;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      transition: all .4s;
+  }
+  
+  &--animated {
+      animation: moveInBottom .5s ease-out .75s;
+      animation-fill-mode: backwards;
   }
 }

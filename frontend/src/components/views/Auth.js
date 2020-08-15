@@ -82,13 +82,13 @@ function Auth() {
         {isLoading ? <LoadingSpinner asOverlay /> : null}
         <h2>{isSignUp ? 'Register' : 'Login'} required</h2>
         <form onSubmit={authSubmitHandler}>
-          {isSignUp && <Input id='name' element='input' type='text' label='Your name' validators={[VALIDATOR_REQUIRE()]} onInput={inputChange} />}
+          {isSignUp && <Input id='name' element='input' errorText='Please, enter name.' type='text' label='Your name' validators={[VALIDATOR_REQUIRE()]} onInput={inputChange} />}
           {isSignUp && <ImageUpload errorText='Please, provide an image.' onInput={inputChange} center id='image' />}
           <Input id='email' element='input' type='email' label='E-mail' validators={[VALIDATOR_EMAIL()]} errorText='Please, enter a valid email.' onInput={inputChange} />
           <Input id='password' element='input' type='password' label='Password' validators={[VALIDATOR_MINLENGTH(6)]} errorText='Please, enter a valid password (at least 6 characters).' onInput={inputChange} />
-          <Button submit disabled={!formState.isValid}>{isSignUp ? 'SIGNUP' : 'LOGIN'}</Button>
+          <Button className='btn--small btn--green' type='submit' disabled={!formState.isValid}>{isSignUp ? 'SIGN UP' : 'LOGIN'}</Button>
         </form>
-        <Button onClick={switchIsSignUp} inverse>SWITCH TO{isSignUp ? ' SIGNIN' : ' SIGNUP'}</Button>
+        <Button className='btn--small btn--blue' onClick={switchIsSignUp}>SWITCH TO{isSignUp ? ' SIGN IN' : ' SIGN UP'}</Button>
       </Card>
     </>
   )

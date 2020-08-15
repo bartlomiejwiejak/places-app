@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import UsersList from './UsersList';
 import ErrorModal from '../../shared/ErrorModal';
 import useHttp from '../../../hooks/useHttp';
+import LoadingSpinner from '../../shared/LoadingSpinner';
 
 const Users = () => {
 
@@ -21,6 +22,7 @@ const Users = () => {
 
   return <>
     <ErrorModal onClear={clearError} error={error} />
+    {isLoading && <LoadingSpinner asOverlay />}
     {!isLoading && users ? <UsersList items={users} /> : null}
   </>
 }

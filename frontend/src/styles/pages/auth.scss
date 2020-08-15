@@ -1,7 +1,8 @@
 .authentication {
   width: 90%;
-  max-width: 25rem;
+  max-width: 40rem;
   margin: 7rem auto;
+  margin-top: 15rem;
   text-align: center;
   &__header {
     color: white;
@@ -9,5 +10,8 @@
   }
   &__form {
     margin-bottom: 1rem;
+  }
+  > .btn {
+    margin-top: 2rem;
   }
 }

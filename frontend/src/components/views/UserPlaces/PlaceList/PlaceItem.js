@@ -57,15 +57,15 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
         onCancel={closeMapHandler}
         header={address}
         contentClass='place-item__modal-content' footerClass='place-item__modal-actions'
-        footer={<Button onClick={closeMapHandler}>CLOSE</Button>}>
+        footer={<Button className='btn--red' onClick={closeMapHandler}>CLOSE</Button>}>
         <div className="map-container">
           <Map center={coordinates} zoom={16} />
         </div>
       </Modal>
       <Modal onCancel={hideDeleteWarningHandler} show={showConfirmModal} header='Are you sure?' footerClass='place-item__modal-actions' footer={
         <>
-          <Button onClick={hideDeleteWarningHandler} inverse>CANCEL</Button>
-          <Button onClick={confirmDeleteHandler} danger>DELETE</Button>
+          <Button className='btn--green' onClick={hideDeleteWarningHandler}>CANCEL</Button>
+          <Button className='btn--red' onClick={confirmDeleteHandler}>DELETE</Button>
         </>
       }>
         <p>Do you want to preceed and delete this place? Please note it can't be undone.</p>
@@ -81,9 +81,10 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
             <p>{description}</p>
           </div>
           <div className="place-item__actions">
-            <Button inverse onClick={openMapHandler}>VIEW ON MAP</Button>
-            {isLoggedIn && userId === creatorId && <Button to={`/places/${id}`}>EDIT</Button>}
-            {isLoggedIn && userId === creatorId && <Button onClick={showDeleteWarningHandler} danger>DELETE</Button>}
+            <Button className='btn--small btn--green' onClick={openMapHandler}>MAP</Button>
+            {isLoggedIn && userId === creatorId && <Button className='btn--small btn--green' to={`/places/${id}`}>EDIT</Button>}
+            <Button className='btn--small btn--blue'>COMMENTS</Button>
+            {isLoggedIn && userId === creatorId && <Button className='btn--small btn--red' onClick={showDeleteWarningHandler}>DELETE</Button>}
           </div>
         </Card>
       </li>

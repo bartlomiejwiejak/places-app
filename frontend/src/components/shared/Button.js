@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Button = ({ href, danger, inverse, children, exact, to, size, type, onClick, disabled }) => {
+const Button = ({ href, children, exact, to, onClick, disabled, className, type = 'button' }) => {
   if (href) {
     return (
       <a
-        className={`button button--${size || 'default'} ${inverse &&
-          'button--inverse'} ${danger && 'button--danger'}`}
+        className={`btn ${className}`}
         href={href}
       >
         {children}
@@ -18,8 +17,7 @@ const Button = ({ href, danger, inverse, children, exact, to, size, type, onClic
       <Link
         to={to}
         exact={exact}
-        className={`button button--${size || 'default'} ${inverse &&
-          'button--inverse'} ${danger && 'button--danger'}`}
+        className={`btn ${className}`}
       >
         {children}
       </Link>
@@ -27,11 +25,10 @@ const Button = ({ href, danger, inverse, children, exact, to, size, type, onClic
   }
   return (
     <button
-      className={`button button--${size || 'default'} ${inverse &&
-        'button--inverse'} ${danger && 'button--danger'}`}
-      type={type}
+      className={`btn ${className}`}
       onClick={onClick}
       disabled={disabled}
+      type={type}
     >
       {children}
     </button>

@@ -30,14 +30,14 @@ function Modal(props) {
       setIsMounted(true)
     } else {
       if (isMounted) {
-        gsap.to('.modal', .5, { scale: 0, autoAlpha: 0, ease: 'power2.out', onComplete: () => setIsMounted(false) })
+        gsap.to('.modal', .5, { transform: 'scale(0) translate(-50%, -50%)', autoAlpha: 0, ease: 'power2.out', onComplete: () => setIsMounted(false) })
       }
     }
   }, [props.show, isMounted])
 
   useEffect(() => {
     if (isMounted) {
-      gsap.to('.modal', .5, { scale: 1, autoAlpha: 1, ease: 'power2.out' })
+      gsap.to('.modal', .5, { transform: 'scale(1) translate(-50%, -50%)', autoAlpha: 1, ease: 'power2.out' })
     }
   }, [isMounted])
   return (

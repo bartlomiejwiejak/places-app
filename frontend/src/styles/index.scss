@@ -1,4 +1,5 @@
 @import './components/avatar.scss';
+@import './base/animations.scss';
 @import './abstracts/variables.scss';
 @import './abstracts/mixins.scss';
 @import './base/typography.scss';
@@ -17,8 +18,9 @@
 @import './components/modal.scss';
 @import './components/map.scss';
 @import './components/input.scss';
-@import './pages/newPlace.scss';
+@import './pages/placeForm.scss';
 @import './base/utilities.scss';
 @import './pages/auth.scss';
 @import './components/loadingSpinner.scss';
 @import './components/imageUpload.scss';
+@import './pages/home.scss';

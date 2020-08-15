@@ -53,10 +53,9 @@ function ImageUpload({ center, id, onInput, errorText }) {
       <div className={`image-upload ${center && 'center'}`}>
         <div className='image-upload__preview'>
           {previewUrl && <img src={previewUrl} alt='Preview' />}</div>
-        {!previewUrl && <p>Please pick an image.</p>}
+        {!isValid && <p className='image-upload__error-text'>{errorText}</p>}
+        <Button className='btn--blue btn--small' onClick={pickImageHandler}>PICK IMAGE</Button>
       </div>
-      <Button type='button' onClick={pickImageHandler}>PICK IMAGE</Button>
-      {!isValid && <p>{errorText}</p>}
     </div>
   )
 }

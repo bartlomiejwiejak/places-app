@@ -3,18 +3,16 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import { AuthContext } from '../context/auth-context';
 import useAuth from '../hooks/useAuth';
+import MainHeader from './layout/MainHeader';
 
 const Users = React.lazy(() => {
   return import('./views/Users');
-})
-const MainHeader = React.lazy(() => {
-  return import('./layout/MainHeader');
 })
 const UserPlaces = React.lazy(() => {
   return import('./views/UserPlaces');
 })
 const NewPlace = React.lazy(() => {
-  return import('./views/Users');
+  return import('./views/NewPlace');
 })
 const Auth = React.lazy(() => {
   return import('./views/Auth');
@@ -57,8 +55,8 @@ export default function () {
 
   return (
     <AuthContext.Provider value={{ login: login, logout: logout, userId: userId, isLoggedIn: !!token, token: token }}>
+      <MainHeader />
       <Suspense fallback={null}>
-        <MainHeader />
         <main>
           {routes}
         </main>

@@ -26,14 +26,11 @@
   a {
     text-decoration: none;
     color: var(--black);
-    padding: 1rem;
+    padding: .5rem;
     margin: 2rem;
-    &:active, &:hover, &.active {
-    border-top: 1px solid var(--black);
-    @include respond(medium) {
-      border: none;
-    }
-    }
+    transition: all 0.3s ease-out;
+    position: relative;
+    @include linkAfter;
   }
  }
   &__header-nav {

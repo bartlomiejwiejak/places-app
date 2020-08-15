@@ -1,0 +1,14 @@
+.home {
+  height: calc(100vh - 10rem);
+  background-image: linear-gradient(to right bottom, rgba(126,213,111,0.8), rgba(40,180,133,0.8)), url('../../assets/images/home.jpg');
+  background-size: cover;
+  background-position: center;
+  &__heading {
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 45%;
+    color: var(--white);
+    text-align: center;
+  }
+}

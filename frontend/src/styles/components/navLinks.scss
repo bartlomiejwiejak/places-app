@@ -21,18 +21,14 @@
     border: 1px solid transparent;
     text-decoration: none;
     color: var(--black);
-    padding: 1rem;
+    padding: .5rem;
     transition: .3s ease-out;
     font-size: 1.4rem;
     font-weight: normal;
+    position: relative;
+    @include linkAfter;
     @include respond(small) {
       font-size: 1.8rem;
-    }
-    &:hover, &:active, &.active {
-      border-top: 1px solid var(--black);
-      @include respond(small) {
-        border: none;
-      }
     }
   }
   button {
@@ -41,19 +37,15 @@
     background: transparent;
     border: none;
     outline: none;
-    padding: 1rem;
+    padding: .5rem;
     font-size: 1.4rem;
     font-family: inherit;
     transition: .3s ease-out;
+    position: relative;
     @include respond(small) {
       font-size: 1.8rem;
       padding: 0;
     }
-    &:hover, &:active {
-      border-top: 1px solid var(--black);
-      @include respond(small) {
-        border: none;
-      }
-    }
+    @include linkAfter
   }
 }

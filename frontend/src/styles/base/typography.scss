@@ -16,3 +16,19 @@ html {
     font-size: 43.75%;
   }
 }
+
+.heading-primary {
+  font-size: 8rem;
+  font-weight: normal;
+  letter-spacing: 2rem;
+  white-space: nowrap;
+  animation: moveInLeft 1s ease-out;
+}
+
+.heading-secondary {
+  font-size: 2rem;
+  letter-spacing: 1rem;
+  font-weight: 400;
+  white-space: nowrap;
+  animation: moveInRight 1s ease-out;
+}

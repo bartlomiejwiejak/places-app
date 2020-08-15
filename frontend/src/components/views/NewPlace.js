@@ -62,7 +62,7 @@ function NewPlace() {
         <ImageUpload errorText='Please, provide an image.' onInput={inputChange} center id='image' />
         <Input onInput={inputChange} id='address' element='input' type='text' label='Adress' validators={[VALIDATOR_REQUIRE()]} errorText='Please, enter a valid address.' />
         <Input onInput={inputChange} id='description' element='textarea' type='text' label='Description' validators={[VALIDATOR_MINLENGTH(5)]} errorText='Please, enter a valid description (at least 5 characters).' />
-        <Button type='submit' disabled={!formState.isValid}>ADD PLACE</Button>
+        <Button className='btn--small btn--green' type='submit' disabled={!formState.isValid}>ADD PLACE</Button>
       </form>
     </>
   )

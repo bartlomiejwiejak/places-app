@@ -1,40 +1,70 @@
 .user-item {
-  margin: 1rem;
-  width: calc(45% - 2rem);
-  min-width: 17.5rem;
+  margin: 2rem;
+  width: 45%;
+  @include respond(medium) {
+    width: 80%;
+  }
   a {
     display: flex;
     align-items: center;
     width: 100%;
     height: 100%;
     text-decoration: none;
-    padding: 1rem;
+    padding: 3rem;
     color: white;
-    background: #292929;
+    background: var(--light);
     transition: .2s ease-out;
+    @include respond(large) {
+      padding: 2rem;
+    }
+    @include respond(xxsmall) {
+      padding: 1rem;
+    }
   &:hover, &:active {
-    background: #ffd900;
+    background: var(--green);
     }
   }
   &__content {
        padding: 0;
   }
   &__image {
-    width: 4rem;
-    height: 4rem;
+    width: 15rem;
+    height: 15rem;
     margin-right: 1rem;
+    @include respond(large) {
+      width: 10rem;
+      height: 10rem;
+    }
+    @include respond(xxsmall) {
+      width: 7.5rem;
+      height: 7.5rem;
+    }
   }
   &__info {
     h2 {
-      font-size: 1.5rem;
+      font-size: 3rem;
       margin: 0 0 0.5rem 0;
       font-weight: normal;
-      color: #ffd900;
+      color: var(--green);
       transition: .2s ease-out;
+      @include respond(large) {
+        font-size: 2rem;
+      }
+      @include respond(xxsmall) {
+        font-size: 1.6rem;
+      }
     }
     h3 {
       margin: 0;
+      font-size: 2rem;
+      color: var(--grey);
       transition: .2s ease-out;
+      @include respond(large) {
+        font-size: 1.6rem;
+      }
+      @include respond(xxsmall) {
+        font-size: 1.2rem;
+      }
     }
   }
   &:hover h2, &:active h2, &:hover h3, &:active h3 {

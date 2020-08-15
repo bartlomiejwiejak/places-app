@@ -9,3 +9,23 @@
     @error "#{$breakpoint} - error";
   }
 }
+@mixin linkAfter {
+  &::after {
+    content: '';
+    height: 1px;
+    position: absolute;
+    left: 0;
+    top: -.5rem;
+    background-color: var(--black);
+    width: 0%;
+    transition: .3s ease-out;
+  }
+  &:hover, &:active, &.active {
+    &::after {
+      width: 100%;
+      @include respond(small) {
+        display: none;
+      }
+    }
+  }
+}
