@@ -1,15 +1,15 @@
 import React, { useState, useContext } from 'react'
 
-import Input from '../components/Input';
-import useForm from '../hooks/useForm';
-import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../functions/validators';
-import Button from '../components/Button';
-import Card from '../components/Card';
-import { AuthContext } from '../context/auth-context';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorModal from '../components/ErrorModal';
-import useHttp from '../hooks/useHttp';
-import ImageUpload from '../components/ImageUpload';
+import Input from '../shared/Input';
+import useForm from '../../hooks/useForm';
+import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../functions/validators';
+import Button from '../shared/Button';
+import Card from '../shared/Card';
+import { AuthContext } from '../../context/auth-context';
+import LoadingSpinner from '../shared/LoadingSpinner';
+import ErrorModal from '../shared/ErrorModal';
+import useHttp from '../../hooks/useHttp';
+import ImageUpload from '../shared/ImageUpload';
 
 function Auth() {
   const [isSignUp, setIsSignUp] = useState(false);

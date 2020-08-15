@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom';
-import { AuthContext } from '../context/auth-context';
+
+import { AuthContext } from '../../../context/auth-context';
 
 function NavLinks() {
 
@@ -9,7 +10,7 @@ function NavLinks() {
   return (
     <nav className='nav-links'>
       <li>
-        <NavLink exact to='/'>ALL USERS</NavLink>
+        <NavLink exact to='/users'>ALL USERS</NavLink>
       </li>
       {isLoggedIn &&
         <li>

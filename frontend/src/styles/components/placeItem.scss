@@ -11,7 +11,7 @@
     width: 100%;
     height: 12.5rem;
     margin-right: 1.5rem;
-    @media (min-width: 768px) {
+    @include respond(small) {
         height: 20rem;
     }
     img {

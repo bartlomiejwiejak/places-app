@@ -1,7 +1,8 @@
 import React from 'react'
-import Card from './Card';
+
+import Card from '../../../shared/Card';
 import PlaceItem from './PlaceItem';
-import Button from './Button';
+import Button from '../../../shared/Button';
 
 function PlaceList({ items }) {
   let content = null;

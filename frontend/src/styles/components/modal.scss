@@ -10,7 +10,7 @@
   transform: scale(0);
   opacity: 0;
   visibility: hidden;
-  @media (min-width: 768px) {
+  @include respond(small) {
     left: calc(50% - 20rem);
     width: 40rem;
   }

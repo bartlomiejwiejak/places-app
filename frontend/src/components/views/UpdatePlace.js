@@ -1,14 +1,14 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useParams, useHistory } from 'react-router-dom';
 
-import Input from '../components/Input';
-import Button from '../components/Button';
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../functions/validators';
-import useForm from '../hooks/useForm';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorModal from '../components/ErrorModal';
-import useHttp from '../hooks/useHttp';
-import { AuthContext } from '../context/auth-context';
+import Input from '../shared/Input';
+import Button from '../shared/Button';
+import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../../functions/validators';
+import useForm from '../../hooks/useForm';
+import LoadingSpinner from '../shared/LoadingSpinner';
+import ErrorModal from '../shared/ErrorModal';
+import useHttp from '../../hooks/useHttp';
+import { AuthContext } from '../../context/auth-context';
 
 function UpdatePlace() {
 

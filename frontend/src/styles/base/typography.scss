@@ -1,0 +1,18 @@
+@font-face {
+  font-family: Monument;
+  src: url('../../assets/fonts/Monument/MonumentExtended-Regular.otf');
+}
+
+html {
+  font-family: 'Monument', serif;
+  font-size: 62.5%;
+  @include respond(large) {
+    font-size: 56.25%;
+  }
+  @include respond(small) {
+    font-size: 50%;
+  }
+  @include respond(xxsmall) {
+    font-size: 43.75%;
+  }
+}

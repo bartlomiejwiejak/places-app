@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react'
 
-import Card from './Card';
-import Button from './Button';
-import Modal from './Modal';
-import Map from './Map';
-import { AuthContext } from '../context/auth-context';
-import useHttp from '../hooks/useHttp';
-import ErrorModal from './ErrorModal';
-import LoadingSpinner from './LoadingSpinner';
+import Card from '../../../shared/Card';
+import Button from '../../../shared/Button';
+import Modal from '../../../shared/Modal';
+import Map from '../../../shared/Map';
+import { AuthContext } from '../../../../context/auth-context';
+import useHttp from '../../../../hooks/useHttp';
+import ErrorModal from '../../../shared/ErrorModal';
+import LoadingSpinner from '../../../shared/LoadingSpinner';
 
 function PlaceItem({ image, title, address, description, id, coordinates, creatorId }) {
 

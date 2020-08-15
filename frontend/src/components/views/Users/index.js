@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import UsersList from '../components/UsersList';
-import ErrorModal from '../components/ErrorModal';
-import useHttp from '../hooks/useHttp';
+
+import UsersList from './UsersList';
+import ErrorModal from '../../shared/ErrorModal';
+import useHttp from '../../../hooks/useHttp';
 
 const Users = () => {
 

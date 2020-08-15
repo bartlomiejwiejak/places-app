@@ -1,6 +1,7 @@
 import React from 'react';
+
 import UserItem from './UserItem';
-import Card from './Card';
+import Card from '../../../shared/Card';
 
 const UsersList = ({ items }) => {
 

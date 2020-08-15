@@ -1,15 +1,15 @@
 import React, { useContext } from 'react'
 import { useHistory } from 'react-router-dom';
 
-import Input from '../components/Input';
-import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../functions/validators';
-import Button from '../components/Button';
-import useForm from '../hooks/useForm';
-import useHttp from '../hooks/useHttp';
-import ErrorModal from '../components/ErrorModal';
-import LoadingSpinner from '../components/LoadingSpinner';
-import { AuthContext } from '../context/auth-context';
-import ImageUpload from '../components/ImageUpload';
+import Input from '../shared/Input';
+import { VALIDATOR_REQUIRE, VALIDATOR_MINLENGTH } from '../../functions/validators';
+import Button from '../shared/Button';
+import useForm from '../../hooks/useForm';
+import useHttp from '../../hooks/useHttp';
+import ErrorModal from '../shared/ErrorModal';
+import LoadingSpinner from '../shared/LoadingSpinner';
+import { AuthContext } from '../../context/auth-context';
+import ImageUpload from '../shared/ImageUpload';
 
 function NewPlace() {
 

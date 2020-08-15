@@ -1,7 +1,8 @@
 import React from 'react';
-import Avatar from './Avatar';
-import Card from './Card';
 import { Link } from 'react-router-dom';
+
+import Avatar from '../../../shared/Avatar';
+import Card from '../../../shared/Card';
 
 const UserItem = ({ image, name, placeCount, id }) => {
   return (

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
-import PlaceList from '../components/PlaceList';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorModal from '../components/ErrorModal';
-import useHttp from '../hooks/useHttp';
+import PlaceList from './PlaceList';
+import LoadingSpinner from '../../shared/LoadingSpinner';
+import ErrorModal from '../../shared/ErrorModal';
+import useHttp from '../../../hooks/useHttp';
 
 function UserPlaces() {
 
