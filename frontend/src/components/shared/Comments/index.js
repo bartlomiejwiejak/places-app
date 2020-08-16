@@ -1,17 +1,59 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 
 import Comment from './Comment';
 import useHttp from '../../../hooks/useHttp';
+import { AuthContext } from '../../../context/auth-context';
+import ErrorModal from '../../shared/ErrorModal';
 
-function Comments() {
-  const { isLoading, error, clearError, sendRequest } = useHttp();
+function Comments({ placeId }) {
+  const { error, clearError, sendRequest } = useHttp();
+  const [value, setValue] = useState('');
+  const { token, userImage } = useContext(AuthContext);
+  const [comments, setComments] = useState(null);
+  const [commentsAdded, setCommentsAdded] = useState(0)
+
+  const inputHandler = (event) => {
+    setValue(event.target.value)
+  }
+
+  const submitHandler = async (event) => {
+    event.preventDefault();
+    try {
+      await sendRequest(`http://localhost:5000/api/places/${placeId}/comments`, 'PATCH', JSON.stringify({
+        content: value
+      }),
+        {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token
+        })
+      setValue('');
+      setCommentsAdded(prevState => prevState + 1)
+    } catch (err) { }
+  }
+
+  useEffect(() => {
+    let responseBody;
+    const fetchComments = async () => {
+      try {
+        responseBody = await sendRequest(`http://localhost:5000/api/places/${placeId}/comments`);
+        setComments(responseBody.comments)
+      } catch (err) { }
+    }
+    fetchComments()
+  }, [commentsAdded, placeId, sendRequest])
 
   return (
     <div className='comment-container'>
-      <Comment author='Bartek' image='https://www.oneworldplayproject.com/wp-content/uploads/2016/03/avatar-1024x1024.jpg'>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quod hic non fugit deserunt soluta. Temporibus praesentium fugiat odio quia cumque, debitis veritatis ipsa voluptates vel nulla nostrum aspernatur, aliquam vitae.</Comment>
-      <Comment author='Bartek' image='https://www.oneworldplayproject.com/wp-content/uploads/2016/03/avatar-1024x1024.jpg'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, reprehenderit soluta sed reiciendis voluptatum eaque eius deleniti quo voluptas neque eligendi, culpa quibusdam aperiam veniam. Est, magni delectus. Rerum, sapiente.Dolor architecto iste incidunt saepe reprehenderit mollitia laborum, molestiae suscipit nemo atque at ipsum voluptate quos accusamus veniam facere eius iusto cum minus numquam? Ullam dicta veniam obcaecati reprehenderit tempore.</Comment>
+      <ErrorModal onClear={clearError} error={error} />
+      <form className='comment__form' onSubmit={submitHandler}>
+        <div className="comment__img-container">
+          <img src={`http://localhost:5000/${userImage}`} alt='Your img' className="comment__img" />
+        </div>
+        <input value={value} onChange={inputHandler} placeholder='Add comment...' className="comment__add" />
+      </form>
+      {comments && comments.map(comment => <Comment key={comment.id} author={comment.name} image={comment.image}>{comment.content}</Comment>)}
     </div>
   )
 }
 
-export default Comments
+export default Comments;

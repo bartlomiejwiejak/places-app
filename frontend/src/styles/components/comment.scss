@@ -3,12 +3,17 @@
   display: flex;
   &__img {
     width: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
     &-container {
       margin-right: 1rem;
       width: 5rem;
       height: 5rem;
       overflow: hidden;
       border-radius: 50%;
+      position: relative;
       flex-shrink: 0;
     }
   }
@@ -20,5 +25,32 @@
   }
   &__author {
     font-size: inherit;
+  }
+  &__add {
+    width: 100%;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    padding: 1rem;
+    border: 1px solid var(--grey);
+    &:focus {
+      outline: none;
+    }
+  }
+  &__form {
+    display: flex;
+    align-items: center;
+  }
+  &__img {
+    width: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    &-container {
+      width: 5rem;
+      height: 5rem;
+      border-radius: 50%;
+      position: relative;
+    }
   }
 }

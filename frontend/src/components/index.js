@@ -26,7 +26,7 @@ const Home = React.lazy(() => {
 
 export default function () {
 
-  const { login, userId, token, logout } = useAuth();
+  const { login, userId, token, logout, userImage } = useAuth();
 
   let routes;
 
@@ -54,7 +54,7 @@ export default function () {
   }
 
   return (
-    <AuthContext.Provider value={{ login: login, logout: logout, userId: userId, isLoggedIn: !!token, token: token }}>
+    <AuthContext.Provider value={{ login: login, logout: logout, userId: userId, isLoggedIn: !!token, token: token, userImage: userImage }}>
       <MainHeader />
       <Suspense fallback={null}>
         <main>

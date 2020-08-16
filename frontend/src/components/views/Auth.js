@@ -37,7 +37,7 @@ function Auth() {
         formData.append('password', formState.inputs.password.value)
         formData.append('image', formState.inputs.image.value)
         const response = await sendRequest('http://localhost:5000/api/users/signup', 'POST', formData);
-        login(response.user, response.token);
+        login(response.user, response.token, null, response.image);
       } catch (err) { }
     } else {
       try {
@@ -47,7 +47,7 @@ function Auth() {
         }), {
           'Content-Type': 'application/json'
         });
-        login(response.user, response.token);
+        login(response.user, response.token, null, response.image);
       } catch (err) { }
     }
   }

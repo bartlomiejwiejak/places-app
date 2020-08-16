@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator')
 const mongoose = require('mongoose')
 const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 
 const HttpError = require('../models/http-error');
 const getCoordsForAdress = require('../utility/location');
@@ -28,6 +29,57 @@ const getPlaceById = async (req, res, next) => {
   res.json({ place: place.toObject({ getters: true }) })
 }
 
+const addCommentToPlace = async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return next(new HttpError('Invalid inputs passed. Please check your data', 422))
+  }
+
+  const placeId = req.params.placeId;
+  let place;
+
+  try {
+    place = await Place.findById(placeId)
+  } catch (err) {
+    const error = new HttpError('Placing comment failed, try again later.', 500)
+    return next(error);
+  }
+  if (!place) {
+    const error = new HttpError('Place does not exist.', 404)
+    return next(error);
+  }
+
+  let user;
+  try {
+    user = await User.findById(req.userData.userId)
+  } catch (err) {
+    const error = new HttpError('An unknown error accured.', 404)
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError('Could not find an owner of a place.', 403)
+    return next(error);
+  }
+  const comment = {
+    id: uuidv4(),
+    author: req.userData.userId,
+    name: user.name,
+    image: user.image,
+    content: req.body.content
+  }
+
+  place.comments.push(comment)
+
+  try {
+    await place.save()
+  } catch (err) {
+    const error = new HttpError('Saving your comment failed, please try again later.', 401)
+    return next(error);
+  }
+  res.json({ comment: comment })
+}
+
 const getPlacesByUserId = async (req, res, next) => {
   const userId = req.params.userId
   let places;
@@ -35,11 +87,26 @@ const getPlacesByUserId = async (req, res, next) => {
   try {
     places = await Place.find({ creator: userId })
   } catch (err) {
-    const error = new HttpError('Fetchning places failed, please try again later.')
+    const error = new HttpError('Fetchning places failed, please try again later.', 403)
     return next(error);
   }
 
   res.json({ places: places.map(place => place.toObject({ getters: true })) })
+}
+
+const getCommentsByPlaceId = async (req, res, next) => {
+  const placeId = req.params.placeId;
+  let place;
+  try {
+    place = await Place.findById(placeId);
+  } catch (err) {
+    const error = new HttpError('Place doesnt exist.', 403)
+    return next(error);
+  }
+
+  comments = place.comments;
+
+  res.json({ comments: comments })
 }
 
 const createPlace = async (req, res, next) => {
@@ -57,7 +124,6 @@ const createPlace = async (req, res, next) => {
   } catch (error) {
     return next(error)
   }
-  console.log('Controller')
 
   const createdPlace = new Place({
     title,
@@ -174,3 +240,5 @@ exports.getPlacesByUserId = getPlacesByUserId;
 exports.createPlace = createPlace;
 exports.updatePlace = updatePlace;
 exports.deletePlace = deletePlace;
+exports.addCommentToPlace = addCommentToPlace;
+exports.getCommentsByPlaceId = getCommentsByPlaceId;

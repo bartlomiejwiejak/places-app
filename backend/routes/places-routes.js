@@ -9,6 +9,7 @@ const router = express.Router();
 
 router.get('/:placeId', placesControllers.getPlaceById)
 router.get('/user/:userId', placesControllers.getPlacesByUserId)
+router.get('/:placeId/comments', placesControllers.getCommentsByPlaceId)
 
 router.use(checkAuth);
 
@@ -22,5 +23,8 @@ router.patch('/:placeId', [
   check('description').isLength({ min: 5 })
 ], placesControllers.updatePlace)
 router.delete('/:placeId', placesControllers.deletePlace)
+router.patch('/:placeId/comments', [
+  check('content').not().isEmpty()
+], placesControllers.addCommentToPlace)
 
 module.exports = router;

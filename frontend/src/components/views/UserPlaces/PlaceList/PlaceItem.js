@@ -17,7 +17,11 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
   const { isLoggedIn, userId, token } = useContext(AuthContext);
   const [isMounted, setIsMounted] = useState(true)
   const { sendRequest, isLoading, error, clearError } = useHttp();
+  const [showComments, setShowComments] = useState(false);
 
+  const toggleCommentsHandler = () => {
+    setShowComments(prevState => !prevState)
+  }
 
   const openMapHandler = () => {
     setShowMap(true)
@@ -84,10 +88,10 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
           <div className="place-item__actions">
             <Button className='btn--small btn--green' onClick={openMapHandler}>MAP</Button>
             {isLoggedIn && userId === creatorId && <Button className='btn--small btn--green' to={`/places/${id}`}>EDIT</Button>}
-            <Button className='btn--small btn--blue'>COMMENTS</Button>
+            <Button onClick={toggleCommentsHandler} className='btn--small btn--blue'>COMMENTS</Button>
             {isLoggedIn && userId === creatorId && <Button className='btn--small btn--red' onClick={showDeleteWarningHandler}>DELETE</Button>}
           </div>
-          <Comments />
+          {showComments && <Comments placeId={id} />}
         </Card>
       </li>
     </>
