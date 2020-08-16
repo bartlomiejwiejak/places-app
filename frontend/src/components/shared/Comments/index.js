@@ -4,9 +4,10 @@ import Comment from './Comment';
 import useHttp from '../../../hooks/useHttp';
 import { AuthContext } from '../../../context/auth-context';
 import ErrorModal from '../../shared/ErrorModal';
+import LoadingSpinner from '../LoadingSpinner';
 
 function Comments({ placeId }) {
-  const { error, clearError, sendRequest } = useHttp();
+  const { error, clearError, sendRequest, isLoading } = useHttp();
   const [value, setValue] = useState('');
   const { token, userImage } = useContext(AuthContext);
   const [comments, setComments] = useState(null);
@@ -50,6 +51,7 @@ function Comments({ placeId }) {
           <img src={`http://localhost:5000/${userImage}`} alt='Your img' className="comment__img" />
         </div>
         <input value={value} onChange={inputHandler} placeholder='Add comment...' className="comment__add" />
+        {isLoading && <LoadingSpinner />}
       </form>}
       {comments && comments.map(comment => <Comment placeId={placeId} key={comment.id} id={comment.id} author={comment.author} name={comment.name} image={comment.image}>{comment.content}</Comment>)}
     </div>

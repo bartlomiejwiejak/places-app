@@ -26,6 +26,8 @@ function PlaceList({ items }) {
             address={item.address}
             creatorId={item.creator}
             coordinates={item.location}
+            likes={item.likes}
+            comments={item.comments.length}
           />
         )))}
       </ul>

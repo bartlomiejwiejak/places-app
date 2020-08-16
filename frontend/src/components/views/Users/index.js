@@ -19,7 +19,7 @@ const Users = () => {
 
   useEffect(() => {
     if (!fetchedUsersRef.current) return;
-    const filteredUsers = fetchedUsersRef.current.filter(user => user.name.includes(value))
+    const filteredUsers = fetchedUsersRef.current.filter(user => user.name.toUpperCase().includes(value.toUpperCase()))
     setUsers(filteredUsers);
   }, [value])
 

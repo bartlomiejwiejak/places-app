@@ -28,5 +28,6 @@ router.patch('/:placeId/comments', [
   check('content').not().isEmpty()
 ], placesControllers.addCommentToPlace)
 router.delete('/:placeId/comments/:commentId', placesControllers.removeCommentByUserId)
+router.patch('/:placeId/likes', placesControllers.likePlace)
 
 module.exports = router;

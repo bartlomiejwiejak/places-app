@@ -1,5 +1,6 @@
 .place-item {
   margin: 5rem 0;
+  position: relative;
   &__content {
     padding: 0;
   }
@@ -46,6 +47,42 @@
     button, a {
        margin: 0.5rem;
     }
+  }
+  &__indicators {
+    display: flex;
+    justify-content: space-between;
+    font-size: 3rem;
+  }
+  &__likes {
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    &-number {
+      font-size: 2rem;
+      margin: .5rem;
+      display: inline-block;
+    }
+    i {
+      color: var(--red);
+      cursor: pointer;
+    }
+  }
+  &__comments {
+    margin: 1rem;
+    display: flex;
+    align-items: center;
+    &-number {
+      font-size: 2rem;
+      margin: .5rem;
+      display: inline-block;
+    }
+  }
+  &__like {
+    @include center;
+    font-size: 15rem;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 1;
+    color: var(--red);
   }
 }
 .map-container {

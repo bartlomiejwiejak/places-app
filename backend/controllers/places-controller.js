@@ -199,6 +199,40 @@ const createPlace = async (req, res, next) => {
   res.status(201).json({ place: createdPlace })
 }
 
+const likePlace = async (req, res, next) => {
+  const placeId = req.params.placeId;
+  const userId = req.userData.userId;
+
+  let place;
+  try {
+    place = await Place.findById(placeId)
+  } catch (err) {
+    const error = new HttpError('Place does not exist.', 404);
+    return next(error)
+  }
+
+  let isLiked = false;
+
+  if (place.likes.find(id => id === userId)) {
+    isLiked = true;
+  }
+
+  if (!isLiked) {
+    place.likes.push(userId);
+  } else {
+    place.likes = place.likes.filter(id => id !== userId)
+  }
+
+  try {
+    await place.save()
+  } catch (err) {
+    const error = new HttpError('Liking place failed, please try again later.', 404)
+    return next(error)
+  }
+
+  res.status(200).json({ place: place.toObject({ getters: true }) })
+}
+
 const updatePlace = async (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -279,3 +313,4 @@ exports.deletePlace = deletePlace;
 exports.addCommentToPlace = addCommentToPlace;
 exports.getCommentsByPlaceId = getCommentsByPlaceId;
 exports.removeCommentByUserId = removeCommentByUserId;
+exports.likePlace = likePlace;
