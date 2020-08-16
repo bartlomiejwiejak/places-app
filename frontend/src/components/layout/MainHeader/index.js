@@ -19,23 +19,25 @@ const MainHeader = () => {
 
   return (
     <header className='main-header'>
-      <Backdrop show={isSidedrawerOpen} onClick={closeSidedrawerHandler} />
-      <Sidedrawer isSidedrawerOpen={isSidedrawerOpen} onClick={closeSidedrawerHandler}>
-        <nav className="main-navigation__drawer-nav">
+      <div className="main-header__content">
+        <Backdrop show={isSidedrawerOpen} onClick={closeSidedrawerHandler} />
+        <Sidedrawer isSidedrawerOpen={isSidedrawerOpen} onClick={closeSidedrawerHandler}>
+          <nav className="main-navigation__drawer-nav">
+            <NavLinks />
+          </nav>
+        </Sidedrawer>
+        <h1 className='main-navigation__title'>
+          <NavLink exact to='/'>Places App</NavLink>
+        </h1>
+        <nav className='main-navigation__header-nav'>
           <NavLinks />
         </nav>
-      </Sidedrawer>
-      <h1 className='main-navigation__title'>
-        <NavLink exact to='/'>Places App</NavLink>
-      </h1>
-      <nav className='main-navigation__header-nav'>
-        <NavLinks />
-      </nav>
-      <button onClick={openSidedrawerHandler} className='main-navigation__menu-btn'>
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+        <button onClick={openSidedrawerHandler} className='main-navigation__menu-btn'>
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
     </header>
   );
 }

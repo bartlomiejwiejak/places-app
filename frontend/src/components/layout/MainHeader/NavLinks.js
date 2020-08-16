@@ -5,7 +5,7 @@ import { AuthContext } from '../../../context/auth-context';
 
 function NavLinks() {
 
-  const { isLoggedIn, logout, userId } = useContext(AuthContext);
+  const { isLoggedIn, logout, userId, userImage, userName } = useContext(AuthContext);
 
   return (
     <nav className='nav-links'>
@@ -15,10 +15,6 @@ function NavLinks() {
       <li>
         <NavLink exact to='/users'><i class="fas fa-user-friends"></i></NavLink>
       </li>
-      {isLoggedIn &&
-        <li>
-          <NavLink exact to={`/${userId}/places`}><i class="fas fa-user"></i></NavLink>
-        </li>}
       {isLoggedIn && <li>
         <NavLink exact to='/places/new'><i class="fas fa-plus"></i></NavLink>
       </li>}
@@ -29,6 +25,10 @@ function NavLinks() {
       {isLoggedIn &&
         <li>
           <button onClick={logout}><i class="fas fa-sign-out-alt"></i></button>
+        </li>}
+      {isLoggedIn &&
+        <li>
+          <NavLink exact to={`/${userId}/places`}><div className="user-container"><img className='user-image' src={`http://192.168.8.132:5000/${userImage}`} alt="User" /></div><span className='user-name'>{userName}</span></NavLink>
         </li>}
     </nav>
   )

@@ -6,6 +6,7 @@ export default () => {
   const [userId, setUserId] = useState(null);
   const [token, setToken] = useState(null);
   const [userImage, setUserImage] = useState(null)
+  const [userName, setUserName] = useState(null)
 
   const logout = useCallback(() => {
     setUserId(null)
@@ -16,12 +17,13 @@ export default () => {
     }
   }, [])
 
-  const login = useCallback((userId, token, expirationDate, userImage) => {
+  const login = useCallback((userId, token, expirationDate, userImage, name) => {
     setUserId(userId)
     setUserImage(userImage)
     setToken(token)
+    setUserName(name)
     const tokenExpirationDate = expirationDate || new Date(new Date().getTime() + 1000 * 60 * 60)
-    localStorage.setItem('userData', JSON.stringify({ userId, token, expiration: tokenExpirationDate.toISOString(), userImage: userImage }))
+    localStorage.setItem('userData', JSON.stringify({ userId, token, expiration: tokenExpirationDate.toISOString(), userImage: userImage, userName: name }))
     logoutTimeout = setTimeout(() => {
       logout();
     }, tokenExpirationDate.getTime() - new Date().getTime())
@@ -30,9 +32,9 @@ export default () => {
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'))
     if (storedData && storedData.token && new Date(storedData.expiration) > new Date()) {
-      login(storedData.userId, storedData.token, new Date(storedData.expiration), storedData.userImage)
+      login(storedData.userId, storedData.token, new Date(storedData.expiration), storedData.userImage, storedData.userName)
     }
   }, [login])
 
-  return { login, logout, userId, token, userImage }
+  return { login, logout, userId, token, userImage, userName }
 }

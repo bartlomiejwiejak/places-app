@@ -27,9 +27,10 @@
     text-decoration: none;
     color: var(--black);
     margin: 2rem;
+    font-size: 3rem;
     transition: all 0.3s ease-out;
     position: relative;
-    @include linkAfter;
+    font-family: 'Pacifico', cursive;
   }
  }
   &__header-nav {
