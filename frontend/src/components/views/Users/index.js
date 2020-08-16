@@ -26,7 +26,7 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const responseData = await sendRequest('http://localhost:5000/api/users');
+        const responseData = await sendRequest('http://192.168.8.132:5000/api/users');
         setUsers(responseData.users);
         fetchedUsersRef.current = responseData.users;
       } catch (err) { }

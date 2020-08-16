@@ -20,7 +20,7 @@ function Comments({ placeId, commentNumberHandler }) {
   const submitHandler = async (event) => {
     event.preventDefault();
     try {
-      await sendRequest(`http://localhost:5000/api/places/${placeId}/comments`, 'PATCH', JSON.stringify({
+      await sendRequest(`http://192.168.8.132:5000/api/places/${placeId}/comments`, 'PATCH', JSON.stringify({
         content: value
       }),
         {
@@ -36,7 +36,7 @@ function Comments({ placeId, commentNumberHandler }) {
     let responseBody;
     const fetchComments = async () => {
       try {
-        responseBody = await sendRequest(`http://localhost:5000/api/places/${placeId}/comments`);
+        responseBody = await sendRequest(`http://192.168.8.132:5000/api/places/${placeId}/comments`);
         setComments(responseBody.comments)
         commentNumberHandler(responseBody.comments.length)
       } catch (err) { }
@@ -49,7 +49,7 @@ function Comments({ placeId, commentNumberHandler }) {
       <ErrorModal onClear={clearError} error={error} />
       {token && <form className='comment__form' onSubmit={submitHandler}>
         <div className="comment__img-container">
-          <img src={`http://localhost:5000/${userImage}`} alt='Your img' className="comment__img" />
+          <img src={`http://192.168.8.132:5000/${userImage}`} alt='Your img' className="comment__img" />
         </div>
         <input value={value} onChange={inputHandler} placeholder='Add comment...' className="comment__add" />
         {isLoading && <LoadingSpinner />}

@@ -51,7 +51,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
   const confirmDeleteHandler = async () => {
     setShowConfirmModal(false)
     try {
-      await sendRequest(`http://localhost:5000/api/places/${id}`, 'DELETE', {}, {
+      await sendRequest(`http://192.168.8.132:5000/api/places/${id}`, 'DELETE', {}, {
         Authorization: 'Bearer ' + token
       });
       setIsMounted(false)
@@ -66,7 +66,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
     if (isLiked) return;
     setIsLiked(true);
     try {
-      await sendRequest(`http://localhost:5000/api/places/${id}/likes`, 'PATCH', {}, {
+      await sendRequest(`http://192.168.8.132:5000/api/places/${id}/likes`, 'PATCH', {}, {
         Authorization: 'Bearer ' + token
       });
       const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
@@ -82,7 +82,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
     if (!isLiked) return;
     setIsLiked(false);
     try {
-      await sendRequest(`http://localhost:5000/api/places/${id}/likes`, 'PATCH', {}, {
+      await sendRequest(`http://192.168.8.132:5000/api/places/${id}/likes`, 'PATCH', {}, {
         Authorization: 'Bearer ' + token
       });
       setLikesNumber(prev => prev - 1)
@@ -123,7 +123,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
         <Card className='place-item__content'>
           <div style={!isLiked && token ? { cursor: 'pointer' } : {}} onClick={token ? likePlaceHandler : null}>
             <div className="place-item__image">
-              <img src={`${'http://localhost:5000/' + image}`} alt={title} />
+              <img src={`${'http://192.168.8.132:5000/' + image}`} alt={title} />
             </div>
             <div className="place-item__info">
               <h2>{title}</h2>

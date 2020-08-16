@@ -21,6 +21,9 @@
       border-color: #510077;
     }
   }
+  textarea {
+    height: 15rem;
+  }
   &--invalid {
     label, p {
       color: var(--red);

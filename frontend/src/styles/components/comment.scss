@@ -34,14 +34,19 @@
     font-size: 1.2rem;
     padding: 1rem;
     border: 1px solid var(--grey);
+    transition: .2s ease-out;
     &:focus {
       outline: none;
+    &:focus {
+      border: 1px solid var(--black);
+    }
     }
   }
   &__form {
     display: flex;
     align-items: center;
     position: relative;
+    padding: 1rem;
   }
   &__img {
     width: 100%;

@@ -43,7 +43,7 @@ function NewPlace() {
     formData.append('address', formState.inputs.address.value)
     formData.append('image', formState.inputs.image.value)
     try {
-      await sendRequest('http://localhost:5000/api/places', 'POST', formData, {
+      await sendRequest('http://192.168.8.132:5000/api/places', 'POST', formData, {
         Authorization: 'Bearer ' + token
       })
 

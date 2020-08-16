@@ -36,12 +36,12 @@ function Auth() {
         formData.append('name', formState.inputs.name.value)
         formData.append('password', formState.inputs.password.value)
         formData.append('image', formState.inputs.image.value)
-        const response = await sendRequest('http://localhost:5000/api/users/signup', 'POST', formData);
+        const response = await sendRequest('http://192.168.8.132:5000/api/users/signup', 'POST', formData);
         login(response.user, response.token, null, response.image);
       } catch (err) { }
     } else {
       try {
-        const response = await sendRequest('http://localhost:5000/api/users/login', 'POST', JSON.stringify({
+        const response = await sendRequest('http://192.168.8.132:5000/api/users/login', 'POST', JSON.stringify({
           email: formState.inputs.email.value,
           password: formState.inputs.password.value
         }), {

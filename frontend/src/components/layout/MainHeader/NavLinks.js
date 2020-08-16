@@ -10,22 +10,25 @@ function NavLinks() {
   return (
     <nav className='nav-links'>
       <li>
-        <NavLink exact to='/users'>ALL USERS</NavLink>
+        <NavLink exact to='/home'><i className="fas fa-home"></i></NavLink>
+      </li>
+      <li>
+        <NavLink exact to='/users'><i class="fas fa-user-friends"></i></NavLink>
       </li>
       {isLoggedIn &&
         <li>
-          <NavLink exact to={`/${userId}/places`}>MY PLACES</NavLink>
+          <NavLink exact to={`/${userId}/places`}><i class="fas fa-user"></i></NavLink>
         </li>}
       {isLoggedIn && <li>
-        <NavLink exact to='/places/new'>ADD PLACE</NavLink>
+        <NavLink exact to='/places/new'><i class="fas fa-plus"></i></NavLink>
       </li>}
       {!isLoggedIn &&
         <li>
-          <NavLink exact to='/auth'>AUTHENTICATE</NavLink>
+          <NavLink exact to='/auth'><i class="fas fa-sign-in-alt"></i></NavLink>
         </li>}
       {isLoggedIn &&
         <li>
-          <button onClick={logout}>LOGOUT</button>
+          <button onClick={logout}><i class="fas fa-sign-out-alt"></i></button>
         </li>}
     </nav>
   )
