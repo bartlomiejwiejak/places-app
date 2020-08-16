@@ -45,13 +45,13 @@ function Comments({ placeId }) {
   return (
     <div className='comment-container'>
       <ErrorModal onClear={clearError} error={error} />
-      <form className='comment__form' onSubmit={submitHandler}>
+      {token && <form className='comment__form' onSubmit={submitHandler}>
         <div className="comment__img-container">
           <img src={`http://localhost:5000/${userImage}`} alt='Your img' className="comment__img" />
         </div>
         <input value={value} onChange={inputHandler} placeholder='Add comment...' className="comment__add" />
-      </form>
-      {comments && comments.map(comment => <Comment key={comment.id} author={comment.name} image={comment.image}>{comment.content}</Comment>)}
+      </form>}
+      {comments && comments.map(comment => <Comment placeId={placeId} key={comment.id} id={comment.id} author={comment.author} name={comment.name} image={comment.image}>{comment.content}</Comment>)}
     </div>
   )
 }

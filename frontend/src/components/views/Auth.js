@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 
 import Input from '../shared/Input';
 import useForm from '../../hooks/useForm';
-import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE } from '../../functions/validators';
+import { VALIDATOR_EMAIL, VALIDATOR_MINLENGTH, VALIDATOR_REQUIRE, VALIDATOR_MAXLENGTH } from '../../functions/validators';
 import Button from '../shared/Button';
 import Card from '../shared/Card';
 import { AuthContext } from '../../context/auth-context';
@@ -82,7 +82,7 @@ function Auth() {
         {isLoading ? <LoadingSpinner asOverlay /> : null}
         <h2>{isSignUp ? 'Register' : 'Login'} required</h2>
         <form onSubmit={authSubmitHandler}>
-          {isSignUp && <Input id='name' element='input' errorText='Please, enter name.' type='text' label='Your name' validators={[VALIDATOR_REQUIRE()]} onInput={inputChange} />}
+          {isSignUp && <Input id='name' element='input' errorText='Please, enter name (max 16 characters).' type='text' label='Your name' validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(16)]} onInput={inputChange} />}
           {isSignUp && <ImageUpload errorText='Please, provide an image.' onInput={inputChange} center id='image' />}
           <Input id='email' element='input' type='email' label='E-mail' validators={[VALIDATOR_EMAIL()]} errorText='Please, enter a valid email.' onInput={inputChange} />
           <Input id='password' element='input' type='password' label='Password' validators={[VALIDATOR_MINLENGTH(6)]} errorText='Please, enter a valid password (at least 6 characters).' onInput={inputChange} />

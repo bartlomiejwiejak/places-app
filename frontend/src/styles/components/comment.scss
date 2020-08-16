@@ -22,6 +22,7 @@
     background-color: var(--light);
     padding: 1rem;
     border-radius: 6px;
+    position: relative;
   }
   &__author {
     font-size: inherit;
@@ -52,5 +53,14 @@
       border-radius: 50%;
       position: relative;
     }
+  }
+  &__delete {
+    color: var(--red);
+    position: absolute;
+    right: 0;
+    top: 0;
+    font-size: 1.6rem;
+    transform: translate(50%, -50%);
+    cursor: pointer;
   }
 }

@@ -80,6 +80,42 @@ const addCommentToPlace = async (req, res, next) => {
   res.json({ comment: comment })
 }
 
+const removeCommentByUserId = async (req, res, next) => {
+  const userId = req.userData.userId;
+  const placeId = req.params.placeId;
+  const commentId = req.params.commentId;
+
+  let place;
+  try {
+    place = await Place.findById(placeId);
+  } catch (err) {
+    const error = new HttpError('Place does not exist.', 401)
+    return next(error);
+  }
+
+  const comment = place.comments.find(comment => comment.id.toString() === commentId)
+
+  if (!comment) {
+    const error = new HttpError('Comment with provided id does not exist.', 401)
+    return next(error);
+  }
+
+  if (comment.author !== userId) {
+    const error = new HttpError('You are not allowed to delete this comment.', 401)
+    return next(error);
+  }
+
+  place.comments = place.comments.filter(comment => comment.id.toString() !== commentId);
+
+  try {
+    await place.save();
+  } catch (err) {
+    const error = new HttpError('Unknown error accured, please try again later.', 500);
+    return next(error);
+  }
+  res.status(200).json({ comment: comment })
+}
+
 const getPlacesByUserId = async (req, res, next) => {
   const userId = req.params.userId
   let places;
@@ -201,7 +237,7 @@ const deletePlace = async (req, res, next) => {
   const placeId = req.params.placeId;
   let place;
   try {
-    place = await Place.findById(placeId).populate('creator'); //only when connection is set up, gets access to different connection
+    place = await Place.findById(placeId).populate('creator'); //only when connection is set up, gets access to different colection
   } catch (err) {
     const error = new HttpError('Deleting place failed, please try again later.', 500)
     return next(error);
@@ -242,3 +278,4 @@ exports.updatePlace = updatePlace;
 exports.deletePlace = deletePlace;
 exports.addCommentToPlace = addCommentToPlace;
 exports.getCommentsByPlaceId = getCommentsByPlaceId;
+exports.removeCommentByUserId = removeCommentByUserId;

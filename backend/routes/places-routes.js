@@ -4,6 +4,7 @@ const { check } = require('express-validator');
 const placesControllers = require('../controllers/places-controller');
 const fileUpLoad = require('../middleware/file-upload');
 const checkAuth = require('../middleware/auth');
+const place = require('../models/place');
 
 const router = express.Router();
 
@@ -26,5 +27,6 @@ router.delete('/:placeId', placesControllers.deletePlace)
 router.patch('/:placeId/comments', [
   check('content').not().isEmpty()
 ], placesControllers.addCommentToPlace)
+router.delete('/:placeId/comments/:commentId', placesControllers.removeCommentByUserId)
 
 module.exports = router;
