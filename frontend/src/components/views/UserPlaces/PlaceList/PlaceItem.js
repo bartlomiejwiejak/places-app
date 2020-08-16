@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react'
+import React, { useState, useContext, useRef, useCallback } from 'react'
 
 import Card from '../../../shared/Card';
 import Button from '../../../shared/Button';
@@ -22,6 +22,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
   const [isLiked, setIsLiked] = useState(!!likes.filter(like => like === userId).length)
   const [likesNumber, setLikesNumber] = useState(likes.length)
   const likeRef = useRef(null)
+  const [commentNumber, setCommentNumber] = useState(comments);
 
   const toggleCommentsHandler = () => {
     setShowComments(prevState => !prevState)
@@ -42,6 +43,10 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
   const hideDeleteWarningHandler = () => {
     setShowConfirmModal(false)
   }
+
+  const commentNumberHandler = useCallback((number = commentNumber - 1) => {
+    setCommentNumber(number)
+  }, [commentNumber])
 
   const confirmDeleteHandler = async () => {
     setShowConfirmModal(false)
@@ -68,7 +73,9 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
       tl.to(likeRef.current, .5, { scale: 1 })
         .to(likeRef.current, .5, { scale: 0 })
       setLikesNumber(prev => prev + 1)
-    } catch (err) { }
+    } catch (err) {
+      setIsLiked(false);
+    }
   }
 
   const unlikePlaceHandler = async () => {
@@ -79,12 +86,14 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
         Authorization: 'Bearer ' + token
       });
       setLikesNumber(prev => prev - 1)
-    } catch (err) { }
+    } catch (err) {
+      setIsLiked(true);
+    }
   }
 
-  let heart = <i onClick={likePlaceHandler} className="far fa-heart"></i>
+  let heart = <i style={token ? { cursor: 'pointer' } : {}} onClick={token ? likePlaceHandler : null} className="far fa-heart"></i>
   if (isLiked) {
-    heart = <i style={{ cursor: 'pointer' }} onClick={unlikePlaceHandler} className="fas fa-heart"></i>
+    heart = <i style={token ? { cursor: 'pointer' } : {}} onClick={token ? unlikePlaceHandler : null} className="fas fa-heart"></i>
   }
 
   return (
@@ -112,7 +121,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
       <li className="place-item">
         <i ref={likeRef} className="far place-item__like fa-heart"></i>
         <Card className='place-item__content'>
-          <div style={!isLiked ? { cursor: 'pointer' } : {}} onClick={likePlaceHandler}>
+          <div style={!isLiked && token ? { cursor: 'pointer' } : {}} onClick={token ? likePlaceHandler : null}>
             <div className="place-item__image">
               <img src={`${'http://localhost:5000/' + image}`} alt={title} />
             </div>
@@ -124,7 +133,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
           </div>
           <div className="place-item__indicators">
             <div className="place-item__likes">{heart}<span className='place-item__likes-number'>{likesNumber}</span></div>
-            <div className="place-item__comments"><span className='place-item__comments-number'>{comments}</span><i className="far fa-comment"></i></div>
+            <div className="place-item__comments"><span className='place-item__comments-number'>{commentNumber}</span><i className="far fa-comment"></i></div>
           </div>
           <div className="place-item__actions">
             <Button className='btn--small btn--green' onClick={openMapHandler}>MAP</Button>
@@ -132,7 +141,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
             <Button onClick={toggleCommentsHandler} className='btn--small btn--blue'>COMMENTS</Button>
             {isLoggedIn && userId === creatorId && <Button className='btn--small btn--red' onClick={showDeleteWarningHandler}>DELETE</Button>}
           </div>
-          {showComments && <Comments placeId={id} />}
+          {showComments && <Comments commentNumberHandler={commentNumberHandler} placeId={id} />}
         </Card>
       </li>
     </>

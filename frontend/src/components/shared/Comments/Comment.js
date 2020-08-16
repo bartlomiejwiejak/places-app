@@ -5,7 +5,7 @@ import useHttp from '../../../hooks/useHttp';
 import LoadingSpinner from '../../shared/LoadingSpinner';
 import ErrorModal from '../../shared/ErrorModal';
 
-function Comment({ children, author, image, name, id, placeId }) {
+function Comment({ children, author, image, name, id, placeId, commentNumberHandler }) {
 
   const { userId, token } = useContext(AuthContext);
   const { error, isLoading, clearError, sendRequest } = useHttp();
@@ -19,6 +19,7 @@ function Comment({ children, author, image, name, id, placeId }) {
             Authorization: 'Bearer ' + token
           }
         )
+        commentNumberHandler()
         setIsMounted(false)
       } catch (err) { }
     }

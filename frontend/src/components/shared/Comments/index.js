@@ -6,7 +6,7 @@ import { AuthContext } from '../../../context/auth-context';
 import ErrorModal from '../../shared/ErrorModal';
 import LoadingSpinner from '../LoadingSpinner';
 
-function Comments({ placeId }) {
+function Comments({ placeId, commentNumberHandler }) {
   const { error, clearError, sendRequest, isLoading } = useHttp();
   const [value, setValue] = useState('');
   const { token, userImage } = useContext(AuthContext);
@@ -38,10 +38,11 @@ function Comments({ placeId }) {
       try {
         responseBody = await sendRequest(`http://localhost:5000/api/places/${placeId}/comments`);
         setComments(responseBody.comments)
+        commentNumberHandler(responseBody.comments.length)
       } catch (err) { }
     }
     fetchComments()
-  }, [commentsAdded, placeId, sendRequest])
+  }, [commentsAdded, placeId, sendRequest, commentNumberHandler])
 
   return (
     <div className='comment-container'>
@@ -53,7 +54,7 @@ function Comments({ placeId }) {
         <input value={value} onChange={inputHandler} placeholder='Add comment...' className="comment__add" />
         {isLoading && <LoadingSpinner />}
       </form>}
-      {comments && comments.map(comment => <Comment placeId={placeId} key={comment.id} id={comment.id} author={comment.author} name={comment.name} image={comment.image}>{comment.content}</Comment>)}
+      {comments && comments.map(comment => <Comment commentNumberHandler={commentNumberHandler} placeId={placeId} key={comment.id} id={comment.id} author={comment.author} name={comment.name} image={comment.image}>{comment.content}</Comment>)}
     </div>
   )
 }
