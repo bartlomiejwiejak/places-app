@@ -7,7 +7,7 @@
   background: var(--light);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   border-radius: 8px;
-  transform: scale(0) translate(-50%, -50%);
+  transform: scale(0) translate(-50%, -150%);
   opacity: 0;
   visibility: hidden;
   @include respond(medium) {

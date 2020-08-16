@@ -5,9 +5,9 @@ import Card from '../../../shared/Card';
 
 const UsersList = ({ items }) => {
 
-  let content = <div className="center">
+  let content = <div style={{ marginTop: '5rem' }} className="center">
     <Card>
-      <h2>No users found.</h2>
+      <h2 style={{ padding: '2rem', fontSize: '2rem' }}>No users found.</h2>
     </Card>
   </div>
   if (items.length > 0) {
