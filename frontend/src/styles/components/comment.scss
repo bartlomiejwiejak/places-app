@@ -19,7 +19,6 @@
     }
   }
   &__content {
-    font-size: 1.2rem;
     background-color: var(--light);
     padding: 1rem;
     border-radius: 6px;
@@ -30,18 +29,39 @@
   }
   &__add {
     width: 100%;
-    border-radius: 8px;
+    border-radius: 10rem;
     font-size: 1.2rem;
     padding: 1rem;
     border: 1px solid var(--grey);
     transition: .2s ease-out;
+    &::-webkit-input-placeholder { 
+      transition: .2s ease-out;
+    }
+    &:-moz-placeholder { 
+      transition: .2s ease-out;
+    }
+    &::-moz-placeholder { 
+      transition: .2s ease-out;
+    }
+    &:-ms-input-placeholder { 
+      transition: .2s ease-out;
+  }
     &:focus {
       outline: none;
-    &:focus {
-      border: 1px solid var(--black);
-    }
+      &::-webkit-input-placeholder { 
+        color: var(--grey); 
+      }
+      &:-moz-placeholder { 
+        color: var(--grey); 
+      }
+      &::-moz-placeholder { 
+        color: var(--grey); 
+      }
+      &:-ms-input-placeholder { 
+        color: var(--grey); 
     }
   }
+}
   &__form {
     display: flex;
     align-items: center;

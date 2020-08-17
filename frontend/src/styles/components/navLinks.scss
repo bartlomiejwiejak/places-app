@@ -8,13 +8,10 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  @include respond(small) {
-  flex-direction: column;
-  }
   li {
     margin: 0 2rem;
     @include respond(small) {
-      margin: 2rem;
+      margin: 0 1rem;
     }
   }
   a {
@@ -26,14 +23,15 @@
     font-weight: normal;
     position: relative;
     @include linkAfter;
-    color: var(--grey);
     align-items: center;
     display: flex;
     &.active, &:hover {
-      color: var(--black);
+      color: var(--green);
+      .user-name {
+        color: var(--green);
+      }
     }
     @include respond(small) {
-      font-size: 1.8rem;
     }
     .user-container {
       border-radius: 50%;
@@ -65,12 +63,10 @@
     font-family: inherit;
     transition: .3s ease-out;
     position: relative;
-    color: var(--grey);
     &.active, &:hover {
-      color: var(--black);
+      color: var(--blue);
     }
     @include respond(small) {
-      font-size: 1.8rem;
       padding: 0;
     }
     @include linkAfter

@@ -16,38 +16,47 @@ html {
   }
 }
 
+body {
+  font-size: 1.6rem;
+}
+
 .heading-primary {
-  font-size: 8rem;
+  font-size:10rem;
   font-weight: normal;
-  letter-spacing: 2rem;
+  letter-spacing: 10px;
   white-space: nowrap;
   animation: moveInLeft 1s ease-out;
   @include respond(large) {
-    font-size: 6rem;
+    font-size: 9rem;
+    letter-spacing: 8px;
   }
   @include respond(small) {
-    font-size: 4rem;
+    font-size: 8rem;
+    letter-spacing: 6px;
   }
   @include respond(xxsmall) {
-    letter-spacing: 1px;
+    font-size: 7rem;
+    letter-spacing: 3px;
   }
 }
 
 .heading-secondary {
-  font-size: 2rem;
-  letter-spacing: 1rem;
+  font-size: 3rem;
+  letter-spacing: 10px;
   font-weight: 400;
   white-space: nowrap;
   animation: moveInRight 1s ease-out;
   @include respond(large) {
-    font-size: 1.8rem;
+    font-size: 2.5rem;
+  letter-spacing: 8px;
   }
   @include respond(small) {
-    font-size: 1.6rem;
-    white-space: normal;
+    font-size: 2rem;
+    letter-spacing: 6px;
   }
   @include respond(xxsmall) {
-    font-size: 1.4rem;
+    font-size: 1.8rem;
+    letter-spacing: 1px;
     letter-spacing: 1px;
   }
 }

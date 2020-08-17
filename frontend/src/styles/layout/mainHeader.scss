@@ -5,7 +5,6 @@
   left: 0;
   background: var(--white);
   border-bottom: 1px solid var(--grey);
-  padding: 0 1rem;
   position: fixed;
   z-index: 5;
   &__content {
@@ -18,5 +17,7 @@
   }
 }
 main {
-  margin-top: 6rem;
+  padding: 6rem 1rem;
+  max-width: 68rem;
+  margin: 0 auto;
 }

@@ -16,6 +16,17 @@ const getUsers = async (req, res, next) => {
   res.json({ users: users.map(user => user.toObject({ getters: true })) })
 }
 
+const getUserById = async (req, res, next) => {
+  let user;
+  try {
+    user = await User.findById(req.params.userId, '-password')
+  } catch (err) {
+    const error = new HttpError('Could not find user with provided id.', 401);
+    return next(error);
+  }
+  res.status(200).json({ name: user.name, image: user.image })
+}
+
 const signup = async (req, res, next) => {
 
   const errors = validationResult(req)
@@ -120,3 +131,4 @@ const login = async (req, res, next) => {
 exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
+exports.getUserById = getUserById;

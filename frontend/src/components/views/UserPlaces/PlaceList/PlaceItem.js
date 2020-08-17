@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useCallback } from 'react'
+import React, { useState, useContext, useRef, useCallback, useEffect } from 'react'
 
 import Card from '../../../shared/Card';
 import Button from '../../../shared/Button';
@@ -23,6 +23,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
   const [likesNumber, setLikesNumber] = useState(likes.length)
   const likeRef = useRef(null)
   const [commentNumber, setCommentNumber] = useState(comments);
+  const [authorInfo, setAuthorInfo] = useState(null)
 
   const toggleCommentsHandler = () => {
     setShowComments(prevState => !prevState)
@@ -58,20 +59,30 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
     } catch (err) { }
   }
 
+  useEffect(() => {
+    const fetchAuthor = async () => {
+      try {
+        const responseData = await sendRequest(`http://192.168.8.132:5000/api/users/${creatorId}`);
+        setAuthorInfo(responseData);
+      } catch (err) { }
+    }
+    fetchAuthor()
+  }, [creatorId, sendRequest])
+
   if (!isMounted) {
     return null;
   }
 
   const likePlaceHandler = async () => {
+    const tl = gsap.timeline()
+    tl.to(likeRef.current, .4, { scale: 1, ease: 'back.out(1.7)' })
+      .to(likeRef.current, .4, { scale: 0, delay: .5, ease: 'power2.out' })
     if (isLiked) return;
     setIsLiked(true);
     try {
       await sendRequest(`http://192.168.8.132:5000/api/places/${id}/likes`, 'PATCH', {}, {
         Authorization: 'Bearer ' + token
       });
-      const tl = gsap.timeline({ defaults: { ease: 'power2.out' } })
-      tl.to(likeRef.current, .5, { scale: 1 })
-        .to(likeRef.current, .5, { scale: 0 })
       setLikesNumber(prev => prev + 1)
     } catch (err) {
       setIsLiked(false);
@@ -91,9 +102,9 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
     }
   }
 
-  let heart = <i style={token ? { cursor: 'pointer' } : {}} onClick={token ? likePlaceHandler : null} className="far fa-heart"></i>
+  let heart = <div onClick={token ? likePlaceHandler : null} style={token ? { cursor: 'pointer' } : {}} className="place-item__likes" >{<i className="far fa-heart"></i>}<span className='place-item__likes-number'>{likesNumber}</span></div>
   if (isLiked) {
-    heart = <i style={token ? { cursor: 'pointer' } : {}} onClick={token ? unlikePlaceHandler : null} className="fas fa-heart"></i>
+    heart = <div onClick={token ? unlikePlaceHandler : null} style={token ? { cursor: 'pointer' } : {}} className="place-item__likes">{<i className="fas fa-heart"></i>}<span className='place-item__likes-number'>{likesNumber}</span></div>
   }
 
   return (
@@ -118,10 +129,14 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
       }>
         <p>Do you want to preceed and delete this place? Please note it can't be undone.</p>
       </Modal>
-      <li className="place-item">
-        <i ref={likeRef} className="far place-item__like fa-heart"></i>
+      {authorInfo && <li className="place-item">
+        <i ref={likeRef} className="fas fa-heart place-item__like"></i>
         <Card className='place-item__content'>
-          <div style={!isLiked && token ? { cursor: 'pointer' } : {}} onClick={token ? likePlaceHandler : null}>
+          <header className="place-item__author">
+            <div className="place-item__author__img-container"><img alt='Place author' src={`http://192.168.8.132:5000/${authorInfo.image}`} className="place-item__author__img"></img></div>
+            <span className="place-item__author__name">{authorInfo.name}</span>
+          </header>
+          <div style={token ? { cursor: 'pointer' } : {}} onClick={token ? likePlaceHandler : null}>
             <div className="place-item__image">
               <img src={`${'http://192.168.8.132:5000/' + image}`} alt={title} />
             </div>
@@ -132,7 +147,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
             </div>
           </div>
           <div className="place-item__indicators">
-            <div className="place-item__likes">{heart}<span className='place-item__likes-number'>{likesNumber}</span></div>
+            {heart}
             <div className="place-item__comments"><span className='place-item__comments-number'>{commentNumber}</span><i className="far fa-comment"></i></div>
           </div>
           <div className="place-item__actions">
@@ -143,7 +158,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
           </div>
           {showComments && <Comments commentNumberHandler={commentNumberHandler} placeId={id} />}
         </Card>
-      </li>
+      </li>}
     </>
   )
 }
