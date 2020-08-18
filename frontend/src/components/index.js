@@ -8,8 +8,8 @@ import MainHeader from './layout/MainHeader';
 const Users = React.lazy(() => {
   return import('./views/Users');
 })
-const UserPlaces = React.lazy(() => {
-  return import('./views/UserPlaces');
+const User = React.lazy(() => {
+  return import('./views/User');
 })
 const NewPlace = React.lazy(() => {
   return import('./views/NewPlace');
@@ -23,10 +23,13 @@ const UpdatePlace = React.lazy(() => {
 const Home = React.lazy(() => {
   return import('./views/Home');
 })
+const UpdateUser = React.lazy(() => {
+  return import('./views/UpdateUser')
+})
 
 export default function () {
 
-  const { login, userId, token, logout, userImage, userName } = useAuth();
+  const { login, userId, token, logout, userImage, userName, updateUser } = useAuth();
 
   let routes;
 
@@ -36,7 +39,7 @@ export default function () {
         <Route path='/' exact component={Home} />
         <Route path='/users' exact component={Users} />
         <Route path='/auth' exact component={Auth} />
-        <Route path='/:userId/places' exact component={UserPlaces} />
+        <Route path='/:userId/places' exact component={User} />
         <Redirect to='/auth' />
       </Switch>
     )
@@ -45,7 +48,8 @@ export default function () {
       <Switch>
         <Route path='/' exact component={Home} />
         <Route path='/users' exact component={Users} />
-        <Route path='/:userId/places' exact component={UserPlaces} />
+        <Route path='/users/:id' exact component={UpdateUser} />
+        <Route path='/:userId/places' exact component={User} />
         <Route path='/places/new' exact component={NewPlace} />
         <Route path='/places/:placeId' component={UpdatePlace} />
         <Redirect to='/users' />
@@ -54,7 +58,7 @@ export default function () {
   }
 
   return (
-    <AuthContext.Provider value={{ login: login, logout: logout, userId: userId, isLoggedIn: !!token, token: token, userImage: userImage, userName: userName }}>
+    <AuthContext.Provider value={{ login: login, logout: logout, userId: userId, isLoggedIn: !!token, token: token, userImage: userImage, userName: userName, updateUser: updateUser }}>
       <MainHeader />
       <Suspense fallback={null}>
         <main>

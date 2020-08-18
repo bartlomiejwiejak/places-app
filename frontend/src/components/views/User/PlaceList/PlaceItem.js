@@ -130,7 +130,6 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
         <p>Do you want to preceed and delete this place? Please note it can't be undone.</p>
       </Modal>
       {authorInfo && <li className="place-item">
-        <i ref={likeRef} className="fas fa-heart place-item__like"></i>
         <Card className='place-item__content'>
           <header className="place-item__author">
             <div className="place-item__author__img-container"><img alt='Place author' src={`http://192.168.8.132:5000/${authorInfo.image}`} className="place-item__author__img"></img></div>
@@ -138,6 +137,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
           </header>
           <div style={token ? { cursor: 'pointer' } : {}} onClick={token ? likePlaceHandler : null}>
             <div className="place-item__image">
+              <i ref={likeRef} className="fas fa-heart place-item__like"></i>
               <img src={`${'http://192.168.8.132:5000/' + image}`} alt={title} />
             </div>
             <div className="place-item__info">

@@ -36,3 +36,33 @@
   top: 50%;
   transform: translate(-50%,-50%);
 }
+
+@mixin inputFocus {
+  &::-webkit-input-placeholder { 
+    transition: .2s ease-out;
+  }
+  &:-moz-placeholder { 
+    transition: .2s ease-out;
+  }
+  &::-moz-placeholder { 
+    transition: .2s ease-out;
+  }
+  &:-ms-input-placeholder { 
+    transition: .2s ease-out;
+}
+  &:focus {
+    outline: none;
+    &::-webkit-input-placeholder { 
+      color: var(--grey); 
+    }
+    &:-moz-placeholder { 
+      color: var(--grey); 
+    }
+    &::-moz-placeholder { 
+      color: var(--grey); 
+    }
+    &:-ms-input-placeholder { 
+      color: var(--grey); 
+  }
+}
+}

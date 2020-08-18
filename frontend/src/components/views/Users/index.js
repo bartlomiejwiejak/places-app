@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
+import ReactDOM from 'react-dom';
 
 import UsersList from './UsersList';
 import ErrorModal from '../../shared/ErrorModal';
 import useHttp from '../../../hooks/useHttp';
 import LoadingSpinner from '../../shared/LoadingSpinner';
+import isMobile from '../../../functions/isMobile';
 
 const Users = () => {
 
@@ -34,10 +36,14 @@ const Users = () => {
     fetchUsers();
   }, [sendRequest])
 
+  const inputContent = (
+    isMobile() ? <input placeholder='Search' onChange={handleInputChange} value={value} className='users-search' /> : ReactDOM.createPortal(<input placeholder='Search' style={{ width: '80%', margin: '0 auto' }} onChange={handleInputChange} value={value} className='users-search' />, document.getElementById('input--hook'))
+  )
+
   return <>
     <ErrorModal onClear={clearError} error={error} />
     {isLoading && <LoadingSpinner asOverlay />}
-    <input placeholder='Search' onChange={handleInputChange} value={value} className='users-search' />
+    {inputContent}
     {!isLoading && users ? <UsersList items={users} /> : null}
   </>
 }

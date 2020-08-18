@@ -51,6 +51,7 @@
       font-weight: bold;
       color: var(--black);
       margin: 1rem;
+      white-space: nowrap;
     }
   }
   button {
@@ -64,7 +65,7 @@
     transition: .3s ease-out;
     position: relative;
     &.active, &:hover {
-      color: var(--blue);
+      color: var(--green);
     }
     @include respond(small) {
       padding: 0;

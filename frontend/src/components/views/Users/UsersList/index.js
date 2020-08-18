@@ -5,11 +5,10 @@ import Card from '../../../shared/Card';
 
 const UsersList = ({ items }) => {
 
-  let content = <div style={{ marginTop: '5rem' }} className="center">
-    <Card>
-      <h2 style={{ padding: '2rem', fontSize: '2rem' }}>No users found.</h2>
-    </Card>
-  </div>
+
+  let content = <Card style={{ borderRadius: '6px', padding: '2rem', margin: '2rem 0', width: '100%' }} className='user-item__content'>No users found.</Card>
+
+
   if (items.length > 0) {
     content = (
       <ul className='users-list'>

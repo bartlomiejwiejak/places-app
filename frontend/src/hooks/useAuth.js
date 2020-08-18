@@ -29,6 +29,13 @@ export default () => {
     }, tokenExpirationDate.getTime() - new Date().getTime())
   }, [logout])
 
+  const updateUser = useCallback((name, userImage) => {
+    setUserName(name);
+    setUserImage(userImage);
+    const storedData = JSON.parse(localStorage.getItem('userData'))
+    localStorage.setItem('userData', JSON.stringify({ userId: storedData.userId, token: storedData.token, expiration: storedData.expiration.toISOString(), userImage: userImage, userName: name }))
+  }, [])
+
   useEffect(() => {
     const storedData = JSON.parse(localStorage.getItem('userData'))
     if (storedData && storedData.token && new Date(storedData.expiration) > new Date()) {
@@ -36,5 +43,5 @@ export default () => {
     }
   }, [login])
 
-  return { login, logout, userId, token, userImage, userName }
+  return { login, logout, userId, token, userImage, userName, updateUser }
 }

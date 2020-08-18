@@ -11,14 +11,14 @@
   input,textarea {
     width: 100%;
     font: inherit;
-    border: 1px solid #ccc;
+    border: 1px solid var(--grey);
     background: #f8f8f8;
-    padding: 0.15rem 0.25rem;
-    font-size: 1.4rem;
-    input:focus, textarea:focus {
+    padding: .5rem 1rem;
+    font-size: 1.6rem;
+    border-radius: 5px;
+    transition: .2s ease-out;
+    &:focus, &:focus {
       outline: none;
-      background: #ebebeb;
-      border-color: #510077;
     }
   }
   textarea {

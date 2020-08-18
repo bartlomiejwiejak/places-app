@@ -5,6 +5,7 @@ import PlaceList from './PlaceList';
 import LoadingSpinner from '../../shared/LoadingSpinner';
 import ErrorModal from '../../shared/ErrorModal';
 import useHttp from '../../../hooks/useHttp';
+import Profile from './Profile';
 
 function UserPlaces() {
 
@@ -28,7 +29,8 @@ function UserPlaces() {
     <>
       <ErrorModal error={error} onClear={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
-      {places && <PlaceList items={places} />}
+      <Profile id={userId} />
+      {places && <PlaceList id={userId} items={places} />}
     </>
   )
 }

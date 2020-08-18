@@ -24,7 +24,51 @@ const getUserById = async (req, res, next) => {
     const error = new HttpError('Could not find user with provided id.', 401);
     return next(error);
   }
-  res.status(200).json({ name: user.name, image: user.image })
+  res.status(200).json({ name: user.name, places: user.places, image: user.image, description: user.description, followers: user.followers, following: user.following })
+}
+
+const updateUser = async (req, res, next) => {
+  const errors = validationResult(req)
+
+  if (!errors.isEmpty()) {
+
+    return next(new HttpError('Invalid inputs. Please check your data.'))
+  }
+
+  const reqId = req.params.id;
+  const userId = req.userData.userId;
+
+  if (reqId !== userId) {
+    return next(new HttpError('You are not allowed to update provided user.', 500))
+  }
+
+  let user;
+
+  try {
+    user = await User.findById(reqId, '-password');
+  } catch (err) {
+    const error = new HttpError('Unknown error, please try again later.', 404)
+    return next(error);
+  }
+
+  if (!user) {
+    const error = new HttpError('User does not exist.', 500)
+    return next(error);
+  }
+
+  user.name = req.body.name;
+  user.description = req.body.description;
+  if (req.file) {
+    user.image = req.file.path;
+  }
+
+  try {
+    user.save();
+  } catch (err) {
+    const error = new HttpError('Could not update your data, please try again later', 404);
+    return next(error);
+  }
+  res.status(200).json({ user: user.toObject({ getters: true }) })
 }
 
 const signup = async (req, res, next) => {
@@ -63,7 +107,10 @@ const signup = async (req, res, next) => {
     email,
     image: req.file.path,
     password: hashedPassword,
-    places: []
+    places: [],
+    followers: [],
+    followers: [],
+    description: ''
   })
   try {
     await createdUser.save()
@@ -132,3 +179,4 @@ exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
 exports.getUserById = getUserById;
+exports.updateUser = updateUser;

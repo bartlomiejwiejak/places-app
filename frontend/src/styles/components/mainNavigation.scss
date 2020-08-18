@@ -9,6 +9,7 @@
     position: relative;
     font-family: 'Pacifico', cursive;
     transition: .2s ease-out;
+    white-space: nowrap;
     &:hover, &.active {
       color: var(--green);
     }

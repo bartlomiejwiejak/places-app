@@ -1,16 +1,20 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import Card from '../../../shared/Card';
 import PlaceItem from './PlaceItem';
+import { AuthContext } from '../../../../context/auth-context';
+import Button from '../../../shared/Button';
 
-function PlaceList({ items }) {
+function PlaceList({ items, id }) {
+  const { userId } = useContext(AuthContext)
+
   let content = null;
   if (items.length === 0) {
     content = (
-      <div className="place-list center">
-        <Card>
-          <h2 style={{ padding: '2rem', fontSize: '2rem' }}>No places found.</h2>
-        </Card>
+      <div style={{ textAlign: 'center' }} className="place-list">
+        {userId === id ? <Button to='/places/new' className='btn--green'>CREATE PLACE</Button> : <Card style={{ padding: '2rem', width: '100%' }}>
+          User has no places.
+        </Card>}
       </div>
     )
   } else {

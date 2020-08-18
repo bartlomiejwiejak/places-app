@@ -1,16 +1,12 @@
 .users {
   &-search {
-    width: 30%;
     padding: 1rem;
-    margin: 0 auto;
     display: block;
     margin-top: 2rem;
-    font-size: 2rem;
-    @include respond(medium) {
-      width: 50%;
-    }
-    @include respond(xxsmall) {
-      width: 80%;
-    }
+    border-radius: 10rem;
+    outline: none;
+    width: 100%;
+    border: 1px solid var(--grey);
+    @include inputFocus;
   }
 }

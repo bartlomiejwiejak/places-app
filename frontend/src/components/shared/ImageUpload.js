@@ -2,10 +2,10 @@ import React, { useRef, useState, useEffect } from 'react'
 
 import Button from './Button'
 
-function ImageUpload({ center, id, onInput, errorText }) {
+function ImageUpload({ center, id, onInput, errorText, initialValue, valid }) {
   const [file, setFile] = useState();
-  const [previewUrl, setPreviewUrl] = useState();
-  const [isValid, setIsValid] = useState(false);
+  const [previewUrl, setPreviewUrl] = useState(initialValue && `http://192.168.8.132:5000/${initialValue}`);
+  const [isValid, setIsValid] = useState(valid);
 
   const filePickerRef = useRef()
 
@@ -47,7 +47,7 @@ function ImageUpload({ center, id, onInput, errorText }) {
         ref={filePickerRef}
         type='file'
         style={{ display: 'none' }}
-        accept='.jpt,.png,.jpeg'
+        accept='.jpt,.png,.jpeg,.jpg'
         onChange={pickedHandler}
       />
       <div className={`image-upload ${center && 'center'}`}>

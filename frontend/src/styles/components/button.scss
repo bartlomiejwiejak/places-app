@@ -41,8 +41,7 @@
   
   &--white {
       background-color: var(--white);
-      color: var(--grey);
-
+      color: var(--black-light);
       &::after {
           background-color: var(--white);
       }
