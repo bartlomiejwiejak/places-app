@@ -69,8 +69,8 @@ function UpdateUser() {
       const responseData = await sendRequest(`http://192.168.8.132:5000/api/users/${id}`, 'PATCH', formData, {
         Authorization: 'Bearer ' + token
       })
-      updateUser(formState.inputs.name.value, responseData.user.image);
-      history.push(`/${id}/places`);
+      await updateUser(formState.inputs.name.value, responseData.user.image);
+      history.push(`/${id}/places`)
     } catch (err) { }
   }
 

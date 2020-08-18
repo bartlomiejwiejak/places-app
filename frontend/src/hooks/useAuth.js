@@ -13,6 +13,11 @@ export default () => {
   const logout = useCallback(() => {
     setUserId(null)
     setToken(null)
+    setFollowers([])
+    setFollowing([])
+    setUserImage(null)
+    setUserName(null)
+
     localStorage.removeItem('userData')
     if (logoutTimeout) {
       clearTimeout(logoutTimeout)

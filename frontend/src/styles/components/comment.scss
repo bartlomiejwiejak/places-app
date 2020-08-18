@@ -56,12 +56,16 @@
     }
   }
   &__delete {
-    color: var(--red);
+    color: var(--grey);
     position: absolute;
     right: 0;
     top: 0;
     font-size: 1.6rem;
     transform: translate(50%, -50%);
     cursor: pointer;
+    transition: .2s ease-out;
+    &:hover {
+      color: var(--red);
+    }
   }
 }

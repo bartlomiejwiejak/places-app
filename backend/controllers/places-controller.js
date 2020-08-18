@@ -64,8 +64,6 @@ const addCommentToPlace = async (req, res, next) => {
   const comment = {
     id: uuidv4(),
     author: req.userData.userId,
-    name: user.name,
-    image: user.image,
     content: req.body.content
   }
 
