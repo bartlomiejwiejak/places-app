@@ -15,7 +15,7 @@ function Profile({ id }) {
   const requestPendingRef = useRef(false);
 
   const { sendRequest, error, clearError } = useHttp();
-  const { userId, token, logout } = useContext(AuthContext);
+  const { userId, token, logout, updateFollow, following } = useContext(AuthContext);
   const history = useHistory()
 
   useEffect(() => {
@@ -58,11 +58,16 @@ function Profile({ id }) {
       if (isFollowing) {
         setIsFollowing(false)
         setFollowersNumber(prev => prev - 1)
+        const newFollowing = following.filter(user => user !== id)
+        requestPendingRef.current = false;
+        updateFollow(newFollowing)
       } else {
         setIsFollowing(true)
         setFollowersNumber(prev => prev + 1)
+        const newFollowing = [...following, id]
+        requestPendingRef.current = false;
+        updateFollow(newFollowing)
       }
-      requestPendingRef.current = false;
     } catch (err) { }
   }
 

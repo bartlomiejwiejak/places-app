@@ -115,7 +115,7 @@ const signup = async (req, res, next) => {
     password: hashedPassword,
     places: [],
     followers: [],
-    follows: [],
+    following: [],
     description: ''
   })
   try {
@@ -133,7 +133,7 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(201).json({ user: createdUser.id, email: createdUser.email, token: token, image: createdUser.image, name: createdUser.name, followers: createdUser.followers, follows: createdUser.follows })
+  res.status(201).json({ user: createdUser.id, email: createdUser.email, token: token, image: createdUser.image, name: createdUser.name, followers: createdUser.followers, following: createdUser.following })
 }
 
 const deleteAccount = async (req, res, next) => {

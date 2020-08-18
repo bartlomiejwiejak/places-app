@@ -34,17 +34,21 @@ export default () => {
   }, [logout])
 
   const updateUser = useCallback((name, userImage) => {
+    const storedData = JSON.parse(localStorage.getItem('userData'))
+    localStorage.setItem('userData', JSON.stringify({ userId: storedData.userId, token: storedData.token, expiration: storedData.expiration, userImage: userImage, userName: name, following: storedData.following, followers: storedData.followers }))
     setUserName(name);
     setUserImage(userImage);
-    const storedData = JSON.parse(localStorage.getItem('userData'))
-    localStorage.setItem('userData', JSON.stringify({ userId: storedData.userId, token: storedData.token, expiration: storedData.expiration.toISOString(), userImage: userImage, userName: name, following: storedData.following, followers: storedData.followers }))
   }, [])
 
   const updateFollow = useCallback((following, followers) => {
-    setFollowers(followers);
-    setFollowing(following);
+    if (followers) {
+      setFollowers(followers)
+    };
+    if (following) {
+      setFollowing(following);
+    }
     const storedData = JSON.parse(localStorage.getItem('userData'))
-    localStorage.setItem('userData', JSON.stringify({ userId: storedData.userId, token: storedData.token, expiration: storedData.expiration.toISOString(), userImage: storedData.userImage, userName: storedData.name, following: following, followers: followers }))
+    localStorage.setItem('userData', JSON.stringify({ userId: storedData.userId, token: storedData.token, expiration: storedData.expiration, userImage: storedData.userImage, userName: storedData.name, following: following ? following : storedData.following, followers: followers ? followers : storedData.followers }))
   }, [])
 
   useEffect(() => {

@@ -92,6 +92,7 @@
     align-items: center;
     &__img {
       width: 100%;
+      cursor: pointer;
       &-container {
         margin: 1.5rem;
         width: 4rem;
@@ -109,6 +110,7 @@
     &__box {
         display: flex;
         flex-direction: column;
+        cursor: pointer;
         span:nth-child(1) {
           font-weight: bold;
         }

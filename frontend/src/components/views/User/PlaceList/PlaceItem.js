@@ -1,5 +1,6 @@
 import React, { useState, useContext, useRef, useCallback, useEffect } from 'react'
 import { formatRelative } from 'date-fns'
+import { useHistory } from 'react-router-dom';
 
 import Card from '../../../shared/Card';
 import Button from '../../../shared/Button';
@@ -16,15 +17,17 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
 
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const { isLoggedIn, userId, token } = useContext(AuthContext);
   const [isMounted, setIsMounted] = useState(true)
-  const { sendRequest, isLoading, error, clearError } = useHttp();
   const [showComments, setShowComments] = useState(false);
-  const [isLiked, setIsLiked] = useState(!!likes.filter(like => like === userId).length)
-  const [likesNumber, setLikesNumber] = useState(likes.length)
-  const likeRef = useRef(null)
   const [commentNumber, setCommentNumber] = useState(comments);
   const [authorInfo, setAuthorInfo] = useState(null)
+  const [likesNumber, setLikesNumber] = useState(likes.length)
+
+  const { isLoggedIn, userId, token } = useContext(AuthContext);
+  const { sendRequest, isLoading, error, clearError } = useHttp();
+  const [isLiked, setIsLiked] = useState(!!likes.filter(like => like === userId).length)
+  const likeRef = useRef(null)
+  const history = useHistory()
 
   const toggleCommentsHandler = () => {
     setShowComments(prevState => !prevState)
@@ -108,6 +111,10 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
     heart = <div onClick={token ? unlikePlaceHandler : null} style={token ? { cursor: 'pointer' } : {}} className="place-item__likes">{<i className="fas fa-heart"></i>}<span className='place-item__likes-number'>{likesNumber}</span></div>
   }
 
+  const handleRedirect = () => {
+    history.push(`/${creatorId}/places`)
+  }
+
   return (
     <>
       {isLoading && <LoadingSpinner />}
@@ -133,8 +140,8 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
       {authorInfo && <li className="place-item">
         <Card className='place-item__content'>
           <header className="place-item__author">
-            <div className="place-item__author__img-container"><img alt='Place author' src={`http://192.168.8.132:5000/${authorInfo.image}`} className="place-item__author__img"></img></div>
-            <div className="place-item__author__box">
+            <div className="place-item__author__img-container"><img onClick={handleRedirect} alt='Place author' src={`http://192.168.8.132:5000/${authorInfo.image}`} className="place-item__author__img"></img></div>
+            <div onClick={handleRedirect} className="place-item__author__box">
               <span>{authorInfo.name}</span>
               <span>{date && formatRelative(new Date(date), new Date())}</span>
             </div>

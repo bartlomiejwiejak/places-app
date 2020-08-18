@@ -69,8 +69,8 @@ function UpdateUser() {
       const responseData = await sendRequest(`http://192.168.8.132:5000/api/users/${id}`, 'PATCH', formData, {
         Authorization: 'Bearer ' + token
       })
-      history.push(`/${id}/places`);
       updateUser(formState.inputs.name.value, responseData.user.image);
+      history.push(`/${id}/places`);
     } catch (err) { }
   }
 
@@ -79,7 +79,7 @@ function UpdateUser() {
       <ErrorModal onClear={clearError} error={error} />
       {isLoading && <LoadingSpinner asOverlay />}
       {loadedUser && !isLoading && <Card className='user-update'>
-        <h1>Update your profile!</h1>
+        <h1>Update Your Profile</h1>
         <form onSubmit={updateUserHandler}>
           <Input valid={true} initialValue={loadedUser.name} id='name' element='input' errorText='Please, enter name (max 16 characters).' type='text' label='Your name' validators={[VALIDATOR_REQUIRE(), VALIDATOR_MAXLENGTH(16)]} onInput={inputChange} />
           <ImageUpload valid={true} initialValue={loadedUser.image} errorText='Please, provide an image.' onInput={inputChange} center id='image' />

@@ -37,6 +37,7 @@ function Auth() {
         formData.append('password', formState.inputs.password.value)
         formData.append('image', formState.inputs.image.value)
         const response = await sendRequest('http://192.168.8.132:5000/api/users/signup', 'POST', formData);
+        console.log(response.following)
         login(response.user, response.token, null, response.image, response.name, response.followers, response.following);
       } catch (err) { }
     } else {
