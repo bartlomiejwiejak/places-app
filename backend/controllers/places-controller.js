@@ -64,7 +64,8 @@ const addCommentToPlace = async (req, res, next) => {
   const comment = {
     id: uuidv4(),
     author: req.userData.userId,
-    content: req.body.content
+    content: req.body.content,
+    likes: []
   }
 
   place.comments.push(comment)
@@ -76,6 +77,48 @@ const addCommentToPlace = async (req, res, next) => {
     return next(error);
   }
   res.json({ comment: comment })
+}
+
+const likeCommentByUserId = async (req, res, next) => {
+  const placeId = req.params.placeId;
+  const commentId = req.params.commentId;
+  const userId = req.userData.userId
+
+  let place;
+  try {
+    place = await Place.findById(placeId);
+  } catch (err) {
+    const error = new HttpError('Unknown error, please try again later.', 402)
+    return next(error);
+  }
+  if (!place) {
+    const error = new HttpError('Could not find place with provided id.', 402)
+    return next(error);
+  }
+  const comment = place.comments.find(comment => comment.id === commentId)
+  if (!comment) {
+    const error = new HttpError('Comment does not exist.', 402)
+    return next(error);
+  }
+  let isLiked = false;
+  if (comment.likes.find(like => like === userId)) {
+    isLiked = true;
+  }
+
+  if (!isLiked) {
+    comment.likes.push(userId)
+  } else {
+    comment.likes = comment.likes.filter(like => like !== userId)
+  }
+  place.comments = place.comments.filter(comment => comment.id !== commentId)
+  place.comments.push(comment)
+  try {
+    await place.save()
+  } catch (err) {
+    const error = new HttpError('Unknown error, please try again later.', 402)
+    return next(error);
+  }
+  res.status(200).json({ comment: comment })
 }
 
 const removeCommentByUserId = async (req, res, next) => {
@@ -190,7 +233,8 @@ const createPlace = async (req, res, next) => {
     location: coordinates,
     image: req.file.path,
     creator: req.userData.userId,
-    date
+    date,
+    comments: []
   })
 
   let user;
@@ -338,3 +382,4 @@ exports.getCommentsByPlaceId = getCommentsByPlaceId;
 exports.removeCommentByUserId = removeCommentByUserId;
 exports.likePlace = likePlace;
 exports.getPlacesByUsersId = getPlacesByUsersId;
+exports.likeCommentByUserId = likeCommentByUserId;

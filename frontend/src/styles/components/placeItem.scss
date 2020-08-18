@@ -8,6 +8,9 @@
     padding: 1.5rem;
     text-align: center;
     font-size: 1.6rem;
+    > * {
+      user-select: text;
+    }
     h2 {
       color: var(--black);
       margin-bottom: .5rem;

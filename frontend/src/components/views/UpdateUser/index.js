@@ -70,7 +70,7 @@ function UpdateUser() {
         Authorization: 'Bearer ' + token
       })
       await updateUser(formState.inputs.name.value, responseData.user.image);
-      history.push(`/${id}/places`)
+      setTimeout(() => history.push(`/${id}/places`), 500)
     } catch (err) { }
   }
 

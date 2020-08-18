@@ -54,7 +54,7 @@ function Comments({ placeId, commentNumberHandler }) {
         <input value={value} onChange={inputHandler} placeholder='Add comment...' className="comment__add" />
         {isLoading && <LoadingSpinner />}
       </form>}
-      {comments && comments.map(comment => <Comment commentNumberHandler={commentNumberHandler} placeId={placeId} key={comment.id} id={comment.id} author={comment.author} name={comment.name} image={comment.image}>{comment.content}</Comment>)}
+      {comments && comments.map(comment => <Comment likes={comment.likes} commentNumberHandler={commentNumberHandler} placeId={placeId} key={comment.id} id={comment.id} author={comment.author} name={comment.name} image={comment.image}>{comment.content}</Comment>)}
     </div>
   )
 }

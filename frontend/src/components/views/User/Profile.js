@@ -83,6 +83,10 @@ function Profile({ id }) {
     checkFollowing()
   }, [id, sendRequest, userId])
 
+  const handleEdit = () => {
+    history.push(`/users/${id}`)
+  }
+
   return (
     <>
       <Modal onCancel={hideDeleteWarningHandler} show={showConfirmModal} header='Are you sure?' footerClass='place-item__modal-actions' footer={
@@ -95,7 +99,7 @@ function Profile({ id }) {
       </Modal>
       <ErrorModal onClear={clearError} error={error} />
       {userInfo && <div className='user-profile'>
-        <div className="user-profile__img">
+        <div onClick={userId === id ? handleEdit : null} style={userId === id ? { cursor: 'pointer' } : {}} className="user-profile__img">
           <img src={`http://192.168.8.132:5000/${userInfo.image}`} alt="User" />
         </div>
         <div className="user-profile__info">

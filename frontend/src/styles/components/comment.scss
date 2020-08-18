@@ -23,6 +23,20 @@
     padding: 1rem;
     border-radius: 6px;
     position: relative;
+    p {
+      user-select: text;
+    }
+    i {
+      position: absolute;
+      right: 0;
+      bottom: 50%;
+      transform: translate(110%, 50%);
+      color: var(--black-light);
+      cursor: pointer;
+      &.fas {
+        animation: heartAppear .3s forwards ease-out;
+      }
+    }
   }
   &__author {
     font-size: inherit;
@@ -66,6 +80,15 @@
     transition: .2s ease-out;
     &:hover {
       color: var(--red);
+    }
+  }
+  &__likes {
+    font-size: 1.2rem;
+    color: var(--black-light);
+    margin-top: .5rem;
+    margin-bottom: -.5rem;
+    span {
+      margin-right: .5rem;
     }
   }
 }

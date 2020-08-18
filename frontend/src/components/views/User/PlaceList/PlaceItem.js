@@ -146,8 +146,8 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
               <span>{date && formatRelative(new Date(date), new Date())}</span>
             </div>
           </header>
-          <div style={token ? { cursor: 'pointer' } : {}} onClick={token ? likePlaceHandler : null}>
-            <div className="place-item__image">
+          <div>
+            <div style={token ? { cursor: 'pointer' } : {}} onClick={token ? likePlaceHandler : null} className="place-item__image">
               <i ref={likeRef} className="fas fa-heart place-item__like"></i>
               <img src={`${'http://192.168.8.132:5000/' + image}`} alt={title} />
             </div>
@@ -159,7 +159,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
           </div>
           <div className="place-item__indicators">
             {heart}
-            <div className="place-item__comments"><span className='place-item__comments-number'>{commentNumber}</span><i className="far fa-comment"></i></div>
+            <div onClick={toggleCommentsHandler} style={{ cursor: 'pointer' }} className="place-item__comments"><span className='place-item__comments-number'>{commentNumber}</span><i className="far fa-comment"></i></div>
           </div>
           <div className="place-item__actions">
             <Button className='btn--small btn--green' onClick={openMapHandler}>MAP</Button>
