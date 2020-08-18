@@ -1,9 +1,11 @@
 const { validationResult } = require('express-validator')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose')
 
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
+const Place = require('../models/place');
 
 const getUsers = async (req, res, next) => {
   let users;
@@ -21,7 +23,11 @@ const getUserById = async (req, res, next) => {
   try {
     user = await User.findById(req.params.userId, '-password')
   } catch (err) {
-    const error = new HttpError('Could not find user with provided id.', 401);
+    const error = new HttpError('Could not fetch user, please try again later.', 401);
+    return next(error);
+  }
+  if (!user) {
+    const error = new HttpError('Could not find user with provided id..', 404);
     return next(error);
   }
   res.status(200).json({ name: user.name, places: user.places, image: user.image, description: user.description, followers: user.followers, following: user.following })
@@ -130,6 +136,35 @@ const signup = async (req, res, next) => {
   res.status(201).json({ user: createdUser.id, email: createdUser.email, token: token, image: createdUser.image, name: createdUser.name })
 }
 
+const deleteAccount = async (req, res, next) => {
+  const id = req.params.id;
+  const userId = req.userData.userId;
+  let user;
+  try {
+    user = await User.findById(id, '-password')
+  } catch (err) {
+    return next(new HttpError('User with provided id does not exist.', 401))
+  }
+
+  if (id !== userId) {
+    return next(new HttpError('You are not allowed to delete this account.', 500))
+  }
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await user.remove({ session: sess })
+    user.places.forEach(async placeId => {
+      const place = await Place.findById(placeId)
+      place.remove({ session: sess })
+    })
+    await sess.commitTransaction();
+  } catch (err) {
+    return next(new HttpError('Deleting user failed, please try again later.', 500))
+  }
+  res.status(201).json({ user: user.toObject({ getters: true }) })
+}
+
 const login = async (req, res, next) => {
   const { password, email } = req.body;
 
@@ -180,3 +215,4 @@ exports.signup = signup;
 exports.login = login;
 exports.getUserById = getUserById;
 exports.updateUser = updateUser;
+exports.deleteAccount = deleteAccount;

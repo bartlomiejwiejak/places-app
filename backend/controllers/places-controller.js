@@ -127,6 +127,11 @@ const getPlacesByUserId = async (req, res, next) => {
     return next(error);
   }
 
+  if (!places) {
+    const error = new HttpError('User does not exist.', 500)
+    return next(error);
+  }
+
   res.json({ places: places.map(place => place.toObject({ getters: true })) })
 }
 

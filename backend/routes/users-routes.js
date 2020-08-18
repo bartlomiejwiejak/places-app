@@ -21,5 +21,6 @@ router.use(checkAuth);
 router.patch('/:id', fileUpLoad.single('image'), [
   check('name').not().isEmpty()
 ], usersController.updateUser)
+router.delete('/:id', usersController.deleteAccount)
 
 module.exports = router;
