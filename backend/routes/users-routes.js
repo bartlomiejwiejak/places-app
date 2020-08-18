@@ -22,5 +22,6 @@ router.patch('/:id', fileUpLoad.single('image'), [
   check('name').not().isEmpty()
 ], usersController.updateUser)
 router.delete('/:id', usersController.deleteAccount)
+router.patch('/:id/follow', usersController.followUser)
 
 module.exports = router;

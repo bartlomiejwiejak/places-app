@@ -23,8 +23,6 @@ function UserPlaces() {
     fetchPlaces()
   }, [sendRequest, userId])
 
-
-
   return (
     <>
       <ErrorModal error={error} onClear={clearError} />

@@ -210,9 +210,55 @@ const login = async (req, res, next) => {
   })
 }
 
+const followUser = async (req, res, next) => {
+  const id = req.params.id;
+  const userId = req.userData.userId;
+
+  if (id === userId) {
+    const error = new HttpError('Unable to follow yourself.', 403)
+    return next(error);
+  }
+
+  let followedUser;
+  try {
+    followedUser = await User.findById(id)
+  } catch (err) {
+    const error = new HttpError('Unknown error accured, please try again later.', 500)
+    return next(error);
+  }
+
+  let followingUser;
+  try {
+    followingUser = await User.findById(userId)
+  } catch (err) {
+    const error = new HttpError('Unknown error accured, please try again later.', 500)
+    return next(error);
+  }
+
+  if (followedUser.followers.find(follower => follower === userId)) {
+    followedUser.followers = followedUser.followers.filter(follower => follower !== userId)
+    followingUser.following = followingUser.following.filter(followingUser => followingUser !== id)
+  } else {
+    followedUser.followers.push(userId);
+    followingUser.following.push(id);
+  }
+
+  try {
+    const sess = await mongoose.startSession();
+    sess.startTransaction();
+    await followingUser.save({ session: sess })
+    await followedUser.save({ session: sess })
+    await sess.commitTransaction();
+  } catch (err) {
+    return next(new HttpError('Following user failed, please try again later', 500))
+  }
+  res.status(201).json({ personId: id })
+}
+
 exports.getUsers = getUsers;
 exports.signup = signup;
 exports.login = login;
 exports.getUserById = getUserById;
 exports.updateUser = updateUser;
 exports.deleteAccount = deleteAccount;
+exports.followUser = followUser;
