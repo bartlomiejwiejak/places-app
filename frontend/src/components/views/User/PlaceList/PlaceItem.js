@@ -1,4 +1,5 @@
 import React, { useState, useContext, useRef, useCallback, useEffect } from 'react'
+import { formatRelative } from 'date-fns'
 
 import Card from '../../../shared/Card';
 import Button from '../../../shared/Button';
@@ -11,7 +12,7 @@ import LoadingSpinner from '../../../shared/LoadingSpinner';
 import Comments from '../../../shared/Comments';
 import gsap from 'gsap';
 
-function PlaceItem({ image, title, address, description, id, coordinates, creatorId, likes, comments }) {
+function PlaceItem({ image, title, address, description, id, coordinates, creatorId, likes, comments, date }) {
 
   const [showMap, setShowMap] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -133,7 +134,10 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
         <Card className='place-item__content'>
           <header className="place-item__author">
             <div className="place-item__author__img-container"><img alt='Place author' src={`http://192.168.8.132:5000/${authorInfo.image}`} className="place-item__author__img"></img></div>
-            <span className="place-item__author__name">{authorInfo.name}</span>
+            <div className="place-item__author__box">
+              <span>{authorInfo.name}</span>
+              <span>{date && formatRelative(new Date(date), new Date())}</span>
+            </div>
           </header>
           <div style={token ? { cursor: 'pointer' } : {}} onClick={token ? likePlaceHandler : null}>
             <div className="place-item__image">

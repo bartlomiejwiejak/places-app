@@ -9,17 +9,35 @@ function PlaceList({ items, id }) {
   const { userId } = useContext(AuthContext)
 
   let content = null;
-  if (items.length === 0) {
+  if (items.length === 0 && userId !== id) {
     content = (
       <div style={{ textAlign: 'center' }} className="place-list">
-        {userId === id ? <Button to='/places/new' className='btn--green'>CREATE PLACE</Button> : <Card style={{ padding: '2rem', width: '100%' }}>
+        <Card style={{ padding: '2rem', width: '100%' }}>
           User has no places.
-        </Card>}
+        </Card>
       </div>
     )
   } else {
+    function compare(a, b) {
+      if (!a.date || !b.date) {
+        return;
+      }
+      const dateA = new Date(a.date).getTime();
+      const dateB = new Date(b.date).getTime();
+
+      let comparison = 0;
+      if (dateA > dateB) {
+        comparison = -1;
+      } else if (dateA < dateB) {
+        comparison = 1;
+      }
+      return comparison;
+    }
+
+    items.sort(compare);
     content = (
       <ul className="place-list">
+        {userId === id && <div style={{ textAlign: 'center', marginBottom: '3rem' }}><Button className='btn--green' to={'/places/new'}>Create Place</Button></div>}
         {items.map((item => (
           <PlaceItem
             key={item.id}
@@ -32,6 +50,7 @@ function PlaceList({ items, id }) {
             coordinates={item.location}
             likes={item.likes}
             comments={item.comments.length}
+            date={item.date}
           />
         )))}
       </ul>

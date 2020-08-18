@@ -101,10 +101,21 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        @include respond(xxsmall) {
+          margin: 1rem;
+        }
       }
     }
-    &__name {
-        font-size: 1.4rem;
+    &__box {
+        display: flex;
+        flex-direction: column;
+        span:nth-child(1) {
+          font-weight: bold;
+        }
+        span:nth-child(2) {
+          font-size: 1.3rem;
+          color: var(--black-light);
+        }
     }
   }
 }
