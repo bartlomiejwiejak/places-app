@@ -135,6 +135,25 @@ const getPlacesByUserId = async (req, res, next) => {
   res.json({ places: places.map(place => place.toObject({ getters: true })) })
 }
 
+const getPlacesByUsersId = async (req, res, next) => {
+  const usersId = req.body.users;
+
+  let places = [];
+  if (usersId) {
+    try {
+      for (const userId of usersId) {
+        const usersPlaces = await Place.find({ creator: userId })
+        places = [...places, ...usersPlaces]
+      }
+    } catch (err) {
+      const error = new HttpError('Something went wrong, please try again later.', 404)
+      return next(error);
+    }
+  }
+
+  res.status(200).json({ places: places })
+}
+
 const getCommentsByPlaceId = async (req, res, next) => {
   const placeId = req.params.placeId;
   let place;
@@ -320,3 +339,4 @@ exports.addCommentToPlace = addCommentToPlace;
 exports.getCommentsByPlaceId = getCommentsByPlaceId;
 exports.removeCommentByUserId = removeCommentByUserId;
 exports.likePlace = likePlace;
+exports.getPlacesByUsersId = getPlacesByUsersId;

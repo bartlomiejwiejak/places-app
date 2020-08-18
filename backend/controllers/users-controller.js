@@ -115,7 +115,7 @@ const signup = async (req, res, next) => {
     password: hashedPassword,
     places: [],
     followers: [],
-    followers: [],
+    follows: [],
     description: ''
   })
   try {
@@ -133,7 +133,7 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(201).json({ user: createdUser.id, email: createdUser.email, token: token, image: createdUser.image, name: createdUser.name })
+  res.status(201).json({ user: createdUser.id, email: createdUser.email, token: token, image: createdUser.image, name: createdUser.name, followers: createdUser.followers, follows: createdUser.follows })
 }
 
 const deleteAccount = async (req, res, next) => {
@@ -206,7 +206,9 @@ const login = async (req, res, next) => {
     email: user.email,
     token: token,
     image: user.image,
-    name: user.name
+    name: user.name,
+    followers: user.followers,
+    following: user.following
   })
 }
 

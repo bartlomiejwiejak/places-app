@@ -37,7 +37,7 @@ function Auth() {
         formData.append('password', formState.inputs.password.value)
         formData.append('image', formState.inputs.image.value)
         const response = await sendRequest('http://192.168.8.132:5000/api/users/signup', 'POST', formData);
-        login(response.user, response.token, null, response.image, response.name);
+        login(response.user, response.token, null, response.image, response.name, response.followers, response.following);
       } catch (err) { }
     } else {
       try {
@@ -47,7 +47,8 @@ function Auth() {
         }), {
           'Content-Type': 'application/json'
         });
-        login(response.user, response.token, null, response.image, response.name);
+        console.log(response)
+        login(response.user, response.token, null, response.image, response.name, response.followers, response.following);
       } catch (err) { }
     }
   }

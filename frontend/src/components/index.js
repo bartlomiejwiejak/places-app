@@ -20,23 +20,26 @@ const Auth = React.lazy(() => {
 const UpdatePlace = React.lazy(() => {
   return import('./views/UpdatePlace');
 })
-const Home = React.lazy(() => {
-  return import('./views/Home');
+const Start = React.lazy(() => {
+  return import('./views/Start');
 })
 const UpdateUser = React.lazy(() => {
   return import('./views/UpdateUser')
 })
+const Home = React.lazy(() => {
+  return import('./views/Home')
+})
 
 export default function () {
 
-  const { login, userId, token, logout, userImage, userName, updateUser } = useAuth();
+  const { login, userId, token, logout, userImage, userName, updateUser, following, followers } = useAuth();
 
   let routes;
 
   if (!token) {
     routes = (
       <Switch>
-        <Route path='/' exact component={Home} />
+        <Route path='/' exact component={Start} />
         <Route path='/users' exact component={Users} />
         <Route path='/auth' exact component={Auth} />
         <Route path='/:userId/places' exact component={User} />
@@ -46,19 +49,20 @@ export default function () {
   } else {
     routes = (
       <Switch>
-        <Route path='/' exact component={Home} />
+        <Route path='/' exact component={Start} />
+        <Route path='/home' exact component={Home} />
         <Route path='/users' exact component={Users} />
         <Route path='/users/:id' exact component={UpdateUser} />
         <Route path='/:userId/places' exact component={User} />
         <Route path='/places/new' exact component={NewPlace} />
         <Route path='/places/:placeId' component={UpdatePlace} />
-        <Redirect to='/users' />
+        <Redirect to='/home' />
       </Switch>
     )
   }
 
   return (
-    <AuthContext.Provider value={{ login: login, logout: logout, userId: userId, isLoggedIn: !!token, token: token, userImage: userImage, userName: userName, updateUser: updateUser }}>
+    <AuthContext.Provider value={{ following: following, followers: followers, login: login, logout: logout, userId: userId, isLoggedIn: !!token, token: token, userImage: userImage, userName: userName, updateUser: updateUser }}>
       <MainHeader />
       <Suspense fallback={null}>
         <main>
