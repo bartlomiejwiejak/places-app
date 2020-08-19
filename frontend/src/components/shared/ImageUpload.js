@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 
 import Button from './Button'
 
-function ImageUpload({ center, id, onInput, errorText, initialValue, valid }) {
+function ImageUpload({ center, id, onInput, errorText, initialValue, valid, style }) {
   const [file, setFile] = useState();
   const [previewUrl, setPreviewUrl] = useState(initialValue && `http://192.168.8.132:5000/${initialValue}`);
   const [isValid, setIsValid] = useState(valid);
@@ -51,7 +51,7 @@ function ImageUpload({ center, id, onInput, errorText, initialValue, valid }) {
         onChange={pickedHandler}
       />
       <div className={`image-upload ${center && 'center'}`}>
-        <div className='image-upload__preview'>
+        <div style={style ? style : {}} className='image-upload__preview'>
           {previewUrl && <img src={previewUrl} alt='Preview' />}</div>
         {!isValid && <p className='image-upload__error-text'>{errorText}</p>}
         <Button className='btn--blue btn--small' onClick={pickImageHandler}>PICK IMAGE</Button>

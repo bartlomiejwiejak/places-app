@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 
-import PlaceList from './PlaceList';
+import PlaceList from '../../shared/PlaceList';
 import LoadingSpinner from '../../shared/LoadingSpinner';
 import ErrorModal from '../../shared/ErrorModal';
 import useHttp from '../../../hooks/useHttp';

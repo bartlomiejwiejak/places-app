@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 
-import Placelist from './User/PlaceList';
+import Placelist from '../shared/PlaceList';
 import useHttp from '../../hooks/useHttp';
 import ErrorModal from '../shared/ErrorModal';
 import LoadingSpinner from '../shared/LoadingSpinner';

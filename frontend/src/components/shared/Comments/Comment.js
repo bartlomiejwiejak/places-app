@@ -3,7 +3,6 @@ import { useHistory } from 'react-router-dom';
 
 import { AuthContext } from '../../../context/auth-context';
 import useHttp from '../../../hooks/useHttp';
-import LoadingSpinner from '../../shared/LoadingSpinner';
 import ErrorModal from '../../shared/ErrorModal';
 
 function Comment({ children, author, id, placeId, commentNumberHandler, likes }) {
@@ -15,7 +14,7 @@ function Comment({ children, author, id, placeId, commentNumberHandler, likes })
   const { userId, token } = useContext(AuthContext);
   const requestPendingRef = useRef(false);
   const [isLiked, setIsLiked] = useState(likes ? !!likes.find(like => like === userId) : false)
-  const { error, isLoading, clearError, sendRequest } = useHttp();
+  const { error, clearError, sendRequest } = useHttp();
   const history = useHistory()
 
   useEffect(() => {
@@ -77,7 +76,6 @@ function Comment({ children, author, id, placeId, commentNumberHandler, likes })
   return (
     isMounted && authorData && <div className='comment'>
       <ErrorModal onClear={clearError} error={error} />
-      {isLoading && <LoadingSpinner />}
       <div style={{ cursor: 'pointer' }} onClick={handleRedirect} className="comment__img-container">
         <img src={`http://192.168.8.132:5000/${authorData.image}`} alt={author} className="comment__img" />
       </div>

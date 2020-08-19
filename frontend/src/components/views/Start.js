@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
 
-import Button from '../../shared/Button';
-import '../../../context/auth-context';
-import { AuthContext } from '../../../context/auth-context';
+import Button from '../shared/Button';
+import '../../context/auth-context';
+import { AuthContext } from '../../context/auth-context';
 
 function Home() {
 

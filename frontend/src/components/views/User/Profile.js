@@ -6,6 +6,7 @@ import ErrorModal from '../../shared/ErrorModal';
 import Button from '../../shared/Button';
 import { AuthContext } from '../../../context/auth-context';
 import Modal from '../../shared/Modal';
+import Avatar from '../../shared/Avatar';
 
 function Profile({ id }) {
   const [userInfo, setUserInfo] = useState(null);
@@ -99,9 +100,7 @@ function Profile({ id }) {
       </Modal>
       <ErrorModal onClear={clearError} error={error} />
       {userInfo && <div className='user-profile'>
-        <div onClick={userId === id ? handleEdit : null} style={userId === id ? { cursor: 'pointer' } : {}} className="user-profile__img">
-          <img src={`http://192.168.8.132:5000/${userInfo.image}`} alt="User" />
-        </div>
+        <Avatar onClick={userId === id ? handleEdit : null} className='user-profile__img' style={userId === id ? { cursor: 'pointer' } : {}} image={`http://192.168.8.132:5000/${userInfo.image}`} alt='User' />
         <div className="user-profile__info">
           <div className="user-profile__line--1">
             <span className="user-profile__name">{userInfo.name}</span>

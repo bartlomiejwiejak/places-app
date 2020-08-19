@@ -1,16 +1,16 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { useParams, useHistory } from 'react-router-dom';
 
-import Input from '../../shared/Input';
-import useForm from '../../../hooks/useForm';
-import ImageUpload from '../../shared/ImageUpload';
-import Button from '../../shared/Button';
-import { VALIDATOR_MAXLENGTH, VALIDATOR_REQUIRE } from '../../../functions/validators';
-import Card from '../../shared/Card';
-import useHttp from '../../../hooks/useHttp';
-import ErrorModal from '../../shared/ErrorModal';
-import LoadingSpinner from '../../shared/LoadingSpinner';
-import { AuthContext } from '../../../context/auth-context';
+import Input from '../shared/Input';
+import useForm from '../../hooks/useForm';
+import ImageUpload from '../shared/ImageUpload';
+import Button from '../shared/Button';
+import { VALIDATOR_MAXLENGTH, VALIDATOR_REQUIRE } from '../../functions/validators';
+import Card from '../shared/Card';
+import useHttp from '../../hooks/useHttp';
+import ErrorModal from '../shared/ErrorModal';
+import LoadingSpinner from '../shared/LoadingSpinner';
+import { AuthContext } from '../../context/auth-context';
 
 function UpdateUser() {
 

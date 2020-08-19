@@ -1,17 +1,18 @@
 import React, { useState, useContext, useRef, useCallback, useEffect } from 'react'
 import { formatRelative } from 'date-fns'
 import { useHistory } from 'react-router-dom';
-
-import Card from '../../../shared/Card';
-import Button from '../../../shared/Button';
-import Modal from '../../../shared/Modal';
-import Map from '../../../shared/Map';
-import { AuthContext } from '../../../../context/auth-context';
-import useHttp from '../../../../hooks/useHttp';
-import ErrorModal from '../../../shared/ErrorModal';
-import LoadingSpinner from '../../../shared/LoadingSpinner';
-import Comments from '../../../shared/Comments';
 import gsap from 'gsap';
+
+import Card from '../Card';
+import Button from '../Button';
+import Avatar from '../Avatar';
+import Modal from '../Modal';
+import Map from '../Map';
+import { AuthContext } from '../../../context/auth-context';
+import useHttp from '../../../hooks/useHttp';
+import ErrorModal from '../ErrorModal';
+import LoadingSpinner from '../LoadingSpinner';
+import Comments from '../Comments';
 
 function PlaceItem({ image, title, address, description, id, coordinates, creatorId, likes, comments, date }) {
 
@@ -140,7 +141,7 @@ function PlaceItem({ image, title, address, description, id, coordinates, creato
       {authorInfo && <li className="place-item">
         <Card className='place-item__content'>
           <header className="place-item__author">
-            <div className="place-item__author__img-container"><img onClick={handleRedirect} alt='Place author' src={`http://192.168.8.132:5000/${authorInfo.image}`} className="place-item__author__img"></img></div>
+            <Avatar className='place-item__author__img' image={`http://192.168.8.132:5000/${authorInfo.image}`} onClick={handleRedirect} alt='Place author' />
             <div onClick={handleRedirect} className="place-item__author__box">
               <span>{authorInfo.name}</span>
               <span>{date && formatRelative(new Date(date), new Date())}</span>

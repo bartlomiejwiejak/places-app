@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom';
 
-import UsersList from './UsersList';
-import ErrorModal from '../../shared/ErrorModal';
-import useHttp from '../../../hooks/useHttp';
-import LoadingSpinner from '../../shared/LoadingSpinner';
-import isMobile from '../../../functions/isMobile';
+import UsersList from '../shared/UsersList';
+import ErrorModal from '../shared/ErrorModal';
+import useHttp from '../../hooks/useHttp';
+import LoadingSpinner from '../shared/LoadingSpinner';
+import isMobile from '../../functions/isMobile';
 
 const Users = () => {
 

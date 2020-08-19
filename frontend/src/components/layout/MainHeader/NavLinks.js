@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { NavLink } from 'react-router-dom';
 
 import { AuthContext } from '../../../context/auth-context';
+import Avatar from '../../shared/Avatar';
 
 function NavLinks() {
 
@@ -28,7 +29,7 @@ function NavLinks() {
         </li>}
       {isLoggedIn &&
         <li>
-          <NavLink exact to={`/${userId}/places`}><div className="user-container"><img className='user-image' src={`http://192.168.8.132:5000/${userImage}`} alt="User" /></div><span className='user-name'>{userName}</span></NavLink>
+          <NavLink exact to={`/${userId}/places`}><Avatar style={{ width: '3rem', height: '3rem' }} image={`http://192.168.8.132:5000/${userImage}`} alt='User' /><span className='user-name'>{userName}</span></NavLink>
         </li>}
     </nav>
   )

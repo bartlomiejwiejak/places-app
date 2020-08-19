@@ -1,9 +1,9 @@
 import React, { useContext } from 'react'
 
-import Card from '../../../shared/Card';
+import Card from '../Card';
 import PlaceItem from './PlaceItem';
-import { AuthContext } from '../../../../context/auth-context';
-import Button from '../../../shared/Button';
+import { AuthContext } from '../../../context/auth-context';
+import Button from '../Button';
 
 function PlaceList({ items, id, home }) {
   const { userId } = useContext(AuthContext)

@@ -1,12 +1,11 @@
 import React from 'react';
 
-const Avatar = props => {
+const Avatar = ({ image, alt, onClick, style, className }) => {
   return (
-    <div className={`avatar ${props.className}`} style={props.style}>
+    <div onClick={onClick} style={style} className={`avatar ${className ? className : {}}`}>
       <img
-        src={props.image}
-        alt={props.alt}
-        style={{ width: props.width, height: props.width }}
+        src={image}
+        alt={alt}
       />
     </div>
   );
