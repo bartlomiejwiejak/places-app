@@ -205,7 +205,7 @@ const getCommentsByPlaceId = async (req, res, next) => {
     return next(error);
   }
 
-  comments = place.comments;
+  const comments = place.comments;
 
   res.json({ comments: comments })
 }

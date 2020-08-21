@@ -33,6 +33,11 @@ const getUserById = async (req, res, next) => {
   res.status(200).json({ name: user.name, places: user.places, image: user.image, description: user.description, followers: user.followers, following: user.following })
 }
 
+const getUsersById = async (req, res, next) => {
+  const usersId = req.body.users;
+
+}
+
 const updateUser = async (req, res, next) => {
   const errors = validationResult(req)
 
@@ -150,14 +155,38 @@ const deleteAccount = async (req, res, next) => {
     return next(new HttpError('You are not allowed to delete this account.', 500))
   }
 
+  const followingUsers = await User.find({ following: userId })
+  const followedUsers = await User.find({ followers: userId })
+  const updatedUsers = [];
+  const combinedUsers = [...followingUsers, ...followedUsers]
+  for (const userOfCombined of combinedUsers) {
+    let pushedUser = userOfCombined;
+    for (const user of updatedUsers) {
+      if (user.id === userOfCombined.id) {
+        pushedUser = null;
+      }
+    }
+    if (pushedUser) {
+      updatedUsers.push(pushedUser)
+    }
+  }
+  for (const user of updatedUsers) {
+    user.following = user.following.filter(id => id !== userId)
+    user.followers = user.followers.filter(id => id !== userId)
+  }
+
   try {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     await user.remove({ session: sess })
-    user.places.forEach(async placeId => {
+
+    for (user of updatedUsers) {
+      await user.save({ session: sess })
+    }
+    for (const placeId of user.places) {
       const place = await Place.findById(placeId)
       place.remove({ session: sess })
-    })
+    }
     await sess.commitTransaction();
   } catch (err) {
     return next(new HttpError('Deleting user failed, please try again later.', 500))
