@@ -148,15 +148,33 @@ const deleteAccount = async (req, res, next) => {
   try {
     user = await User.findById(id, '-password')
   } catch (err) {
-    return next(new HttpError('User with provided id does not exist.', 401))
+    return next(new HttpError('Unknown error accured, please try again later.', 401))
   }
-
   if (id !== userId) {
     return next(new HttpError('You are not allowed to delete this account.', 500))
   }
-
-  const followingUsers = await User.find({ following: userId })
-  const followedUsers = await User.find({ followers: userId })
+  let places = [];
+  try {
+    places = [...await Place.find({})]
+  } catch (err) {
+    return next(new HttpError('User with provided id does not exist.', 401))
+  }
+  for (let place of places) {
+    place.comments = place.comments.filter(comment => comment.author !== userId)
+    place.likes = place.likes.filter(like => like !== userId)
+  }
+  let followingUsers;
+  let followedUsers;
+  try {
+    followingUsers = await User.find({ following: userId })
+  } catch (err) {
+    return next(new HttpError('Unknown error accured, please try again later.', 401))
+  }
+  try {
+    followedUsers = await User.find({ followers: userId })
+  } catch (err) {
+    return next(new HttpError('Unknown error accured, please try again later.', 401))
+  }
   const updatedUsers = [];
   const combinedUsers = [...followingUsers, ...followedUsers]
   for (const userOfCombined of combinedUsers) {
@@ -179,7 +197,9 @@ const deleteAccount = async (req, res, next) => {
     const sess = await mongoose.startSession();
     sess.startTransaction();
     await user.remove({ session: sess })
-
+    for (let place of places) {
+      await place.save({ session: sess })
+    }
     for (user of updatedUsers) {
       await user.save({ session: sess })
     }
