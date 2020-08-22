@@ -362,7 +362,7 @@ const deletePlace = async (req, res, next) => {
     await place.creator.save({ session: sess })
     await sess.commitTransaction();
   } catch (err) {
-    const error = new Http('Deleting place failed, please try again later.', 500)
+    const error = new HttpError('Deleting place failed, please try again later.', 500)
     return next(error)
   }
   fs.unlink(imagePath, (err => {

@@ -53,7 +53,7 @@ export default () => {
       setFollowing(following);
     }
     const storedData = JSON.parse(localStorage.getItem('userData'))
-    localStorage.setItem('userData', JSON.stringify({ userId: storedData.userId, token: storedData.token, expiration: storedData.expiration, userImage: storedData.userImage, userName: storedData.name, following: following ? following : storedData.following, followers: followers ? followers : storedData.followers }))
+    localStorage.setItem('userData', JSON.stringify({ userId: storedData.userId, token: storedData.token, expiration: storedData.expiration, userImage: storedData.userImage, userName: storedData.userName, following: following ? following : storedData.following, followers: followers ? followers : storedData.followers }))
   }, [])
 
   useEffect(() => {
