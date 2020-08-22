@@ -15,6 +15,7 @@ router.post('/signup', fileUpLoad.single('image'), [
   check('password').isLength({ min: 6 })
 ], usersController.signup)
 router.post('/login', usersController.login)
+router.post('/', usersController.getUsersById)
 
 router.use(checkAuth);
 

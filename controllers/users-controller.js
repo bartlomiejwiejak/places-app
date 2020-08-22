@@ -35,7 +35,17 @@ const getUserById = async (req, res, next) => {
 
 const getUsersById = async (req, res, next) => {
   const usersId = req.body.users;
-
+  let users = [];
+  try {
+    for (let id of usersId) {
+      const user = await User.findById(id, '-password');
+      users.push(user);
+    }
+  } catch (err) {
+    const error = new HttpError('Could not fetch users, please try again later.', 401);
+    return next(error);
+  }
+  res.status(200).json({ users: users.map(user => user.toObject({ getters: true })) })
 }
 
 const updateUser = async (req, res, next) => {
@@ -313,3 +323,4 @@ exports.getUserById = getUserById;
 exports.updateUser = updateUser;
 exports.deleteAccount = deleteAccount;
 exports.followUser = followUser;
+exports.getUsersById = getUsersById;

@@ -35,4 +35,39 @@
     padding: 2rem 1rem;
     font-size: 1.6rem;
   }
+  &--follow {
+    .modal__content {
+      padding: 0 1rem;
+      max-height: 60vh;
+      overflow-y: scroll;
+    }
+    .modal__footer {
+      padding: 1rem .5rem;
+      font-size: 1.4rem;
+    }
+    .users-search {
+      margin-top: 1rem;
+      padding: .5rem;
+    }
+    .user-item {
+      margin: 1rem 0;
+      &__content {
+        a{
+          padding: .5rem;
+        }
+      }
+      &__image {
+        width: 4rem;
+        height: 4rem;
+      }
+      &__info {
+        h2 {
+          font-size: 1.5rem;
+        }
+        h3 {
+          font-size: 1.2rem;
+        }
+      }
+    }
+  }
 }

@@ -7,7 +7,7 @@ import useHttp from '../../hooks/useHttp';
 import LoadingSpinner from '../shared/LoadingSpinner';
 import isMobile from '../../functions/isMobile';
 
-const Users = () => {
+const Users = ({ userList, followersNumber, cancelModal }) => {
 
   const { sendRequest, isLoading, error, clearError } = useHttp();
   const [users, setUsers] = useState(null);
@@ -28,23 +28,32 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const responseData = await sendRequest('http://192.168.8.132:5000/api/users');
+        let responseData;
+        if (userList) {
+          responseData = await sendRequest('http://192.168.8.132:5000/api/users', 'POST', JSON.stringify({
+            users: userList
+          }), {
+            'Content-Type': 'application/json'
+          });
+        } else {
+          responseData = await sendRequest('http://192.168.8.132:5000/api/users');
+        }
         setUsers(responseData.users);
         fetchedUsersRef.current = responseData.users;
       } catch (err) { }
     }
     fetchUsers();
-  }, [sendRequest])
+  }, [sendRequest, userList, followersNumber])
 
   const inputContent = (
-    isMobile() ? <input placeholder='Search' onChange={handleInputChange} value={value} className='users-search' /> : ReactDOM.createPortal(<input placeholder='Search' style={{ width: '80%', margin: '0 auto' }} onChange={handleInputChange} value={value} className='users-search' />, document.getElementById('input--hook'))
+    isMobile() || userList ? <input placeholder='Search' onChange={handleInputChange} value={value} className='users-search' /> : ReactDOM.createPortal(<input placeholder='Search' style={{ width: '80%', margin: '0 auto' }} onChange={handleInputChange} value={value} className='users-search' />, document.getElementById('input--hook'))
   )
 
   return <>
     <ErrorModal onClear={clearError} error={error} />
     {isLoading && <LoadingSpinner asOverlay />}
     {inputContent}
-    {!isLoading && users ? <UsersList items={users} /> : null}
+    {!isLoading && users ? <UsersList cancelModal={cancelModal} items={users} /> : null}
   </>
 }
 

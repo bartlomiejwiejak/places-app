@@ -6,7 +6,7 @@ import Backdrop from './Backdrop';
 
 const ModalOverlay = ({ className, style, header, headerClass, onSubmit, contentClass, children, footerClass, footer }) => {
   const content = (
-    <div className={`modal ${className}`} style={style}>
+    <div className={`modal ${className ? className : ''}`} style={style}>
       <header className={`modal__header ${headerClass}`}>
         <h2>{header}</h2>
       </header>

@@ -7,6 +7,7 @@ import Button from '../../shared/Button';
 import { AuthContext } from '../../../context/auth-context';
 import Modal from '../../shared/Modal';
 import Avatar from '../../shared/Avatar';
+import Users from '../Users';
 
 function Profile({ id }) {
   const [userInfo, setUserInfo] = useState(null);
@@ -14,6 +15,9 @@ function Profile({ id }) {
   const [isFollowing, setIsFollowing] = useState(false)
   const [followersNumber, setFollowersNumber] = useState(0)
   const requestPendingRef = useRef(false);
+
+  const [showFollowModal, setShowFollowModal] = useState(false)
+  const [showFollowersModal, setShowFollowersModal] = useState(false)
 
   const { sendRequest, error, clearError } = useHttp();
   const { userId, token, logout, updateFollow, following } = useContext(AuthContext);
@@ -28,7 +32,7 @@ function Profile({ id }) {
       } catch (err) { }
     }
     fetchUserInfo()
-  }, [sendRequest, id])
+  }, [sendRequest, id, followersNumber])
 
   const hideDeleteWarningHandler = () => {
     setShowConfirmModal(false)
@@ -88,6 +92,21 @@ function Profile({ id }) {
     history.push(`/users/${id}`)
   }
 
+  const handleFollowModalClose = () => {
+    setShowFollowModal(false)
+  }
+  const handleFollowersModalClose = () => {
+    setShowFollowersModal(false)
+  }
+
+  const handleFollowModalOpen = () => {
+    setShowFollowModal(true)
+  }
+
+  const handleFollowersModalOpen = () => {
+    setShowFollowersModal(true)
+  }
+
   return (
     <>
       <Modal onCancel={hideDeleteWarningHandler} show={showConfirmModal} header='Are you sure?' footerClass='place-item__modal-actions' footer={
@@ -98,6 +117,16 @@ function Profile({ id }) {
       }>
         <p>Do you want to preceed and delete your account? Please note it can't be undone.</p>
       </Modal>
+      {userInfo && <Modal className='modal--follow' onCancel={handleFollowersModalClose} show={showFollowersModal} header={`Followers: ${followersNumber}`} footerClass='place-item__modal-actions' footer={
+        <Button className='btn--red' onClick={handleFollowersModalClose}>CLOSE</Button>
+      }>
+        <Users cancelModal={handleFollowersModalClose} userList={userInfo.followers} />
+      </Modal>}
+      {userInfo && <Modal className='modal--follow' onCancel={handleFollowModalClose} show={showFollowModal} header={`Following: ${userInfo.following.length}`} footerClass='place-item__modal-actions' footer={
+        <Button className='btn--red' onClick={handleFollowModalClose}>CLOSE</Button>
+      }>
+        <Users cancelModal={handleFollowModalClose} userList={userInfo.following} />
+      </Modal>}
       <ErrorModal onClear={clearError} error={error} />
       {userInfo && <div className='user-profile'>
         <Avatar onClick={userId === id ? handleEdit : null} className='user-profile__img' style={userId === id ? { cursor: 'pointer' } : {}} image={`http://192.168.8.132:5000/${userInfo.image}`} alt='User' />
@@ -109,8 +138,8 @@ function Profile({ id }) {
           <div className="user-profile__line--2">
             <ul>
               <li><span>Places:</span><span>{userInfo.places.length}</span></li>
-              <li><span>Followers:</span><span>{followersNumber}</span></li>
-              <li><span>Follows:</span><span>{userInfo.following.length}</span></li>
+              <li><span style={{ cursor: 'pointer' }} onClick={handleFollowersModalOpen}>Followers:</span><span>{followersNumber}</span></li>
+              <li><span style={{ cursor: 'pointer' }} onClick={handleFollowModalOpen}>Following:</span><span>{userInfo.following.length}</span></li>
             </ul>
           </div>
           <div className="user-profile__line--3">
