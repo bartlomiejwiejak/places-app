@@ -6,13 +6,16 @@ const path = require('path');
 
 const placesRoutes = require('./routes/places-routes');
 const usersRoutes = require('./routes/users-routes');
-const HttpError = require('./models/http-error');
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
 app.use('/uploads/images', express.static(path.join('uploads', 'images')))
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join('build')))
+}
 
 app.use((req, res, next) => {   //prevents cors errors
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -23,16 +26,15 @@ app.use((req, res, next) => {   //prevents cors errors
 
 app.use('/api/places', placesRoutes)
 app.use('/api/users', usersRoutes)
-
-app.use((req, res, next) => {          //for unsupported routes
-  const error = new HttpError('Could not find this route', 404);
-  throw error;
-})
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    res.sendFile(path.resolve(__dirname, 'build', 'index.html'))
+  })
+}
 
 app.use((error, req, res, next) => {
   if (req.file) {
     fs.unlink(req.file.path, (err) => {
-      console.log(err);
     })
   }  //error middleware
   if (res.headerSent) {
@@ -52,7 +54,7 @@ const connectConfig = {
 mongoose
   .connect(connectUrl, connectConfig)
   .then(() => {
-    app.listen(5000)
+    app.listen(PORT)
   })
   .catch(err => {
     console.log(err)
