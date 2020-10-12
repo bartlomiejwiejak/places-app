@@ -10,7 +10,7 @@ You need to have Node.js and npm installed to run this project locally. In your 
 
 ```
 # Clone the project.
-npm clone https://github.com/bartlomiejwiejak/places-app.git
+git clone https://github.com/bartlomiejwiejak/places-app.git
 
 # Install npm dependencies.
 npm install
